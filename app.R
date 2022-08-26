@@ -13,7 +13,7 @@ library(sf)
 library(mapview)
 library(scales)
 
-###### Data Prep - Ignore ######
+###### Data Prep - Summarize Raw VE Outputs ######
 
 # https://nhts.ornl.gov/tables09/CodebookPage.aspx?id=960
 # 
@@ -23,9 +23,9 @@ library(scales)
 # inc_cat <- data.frame(values=round(unname(quantile(hh1$Income, probs = seq(0, 1, 1/5))),0),
 #                       income_cat=c("","low","low-med","med","med-high","high"))
 
-#data<-read_csv("data.csv")
 
-# hh1<-fread("C:/Users/reid.haefer/OneDrive - Resource Systems Group, Inc/Documents/projects/ODOT/Household_Common.csv") %>% mutate(scenario="common") %>% filter(Year==2015) %>% rowwise() %>%
+# hh1<-fread("Household_2050_Exp1_Reduce_Emissions.csv") %>% # filter(Azone=="Baker") %>%
+#   mutate(scenario="one") %>% rowwise() %>%
 #   mutate(income_cat=case_when(Income < 23794 ~ "Less than $24k",
 #                               between(Income, 23794,50289) ~ "$24k-$50k",
 #                               between(Income, 50289,86286) ~ "$50k-$86k",
@@ -41,61 +41,7 @@ library(scales)
 #                                   children_no %in% c(1,2) ~ "1-2 children",
 #                                   children_no>= 3 ~ "3+ children"),
 #          composition=paste(adult_group, children_group, sep=", "))
-# 
-# hh2<-fread("C:/Users/reid.haefer/OneDrive - Resource Systems Group, Inc/Documents/projects/ODOT/Household_Common_MM.csv") %>% mutate(scenario="mm_common") %>% filter(Year==2015) %>%
-#   rowwise() %>%
-#   mutate(income_cat=case_when(Income < 23794 ~ "Less than $24k",
-#                               between(Income, 23794,50289) ~ "$24k-$50k",
-#                               between(Income, 50289,86286) ~ "$50k-$86k",
-#                               between(Income, 86286,148656) ~ "$86k-$148k",
-#                               Income > 148656 ~ "More than $148k"),
-#          adults_no=sum(c(Age20to29,Age30to54,Age55to64,Age65Plus)),
-#          adult_group=case_when(adults_no==0 ~ "0 adults",
-#                                adults_no==1 ~ "1 adult",
-#                                adults_no==2 ~ "2 adults",
-#                                adults_no>=3 ~ "3+ adults"),
-#          children_no=sum(c(Age15to19,Age0to14)),
-#          children_group=case_when(children_no==0 ~ "0 children",
-#                                   children_no %in% c(1,2) ~ "1-2 children",
-#                                   children_no>= 3 ~ "3+ children"),
-#          composition=paste(adult_group, children_group, sep=", "))
-# 
-# hh3<-fread("C:/Users/reid.haefer/OneDrive - Resource Systems Group, Inc/Documents/projects/ODOT/Household_STS_MM.csv") %>% mutate(scenario="mm_STS", BikePMT=as.numeric(BikePMT))  %>% filter(Year==2050) %>%
-#   rowwise() %>%
-#   mutate(income_cat=case_when(Income < 23794 ~ "Less than $24k",
-#                               between(Income, 23794,50289) ~ "$24k-$50k",
-#                               between(Income, 50289,86286) ~ "$50k-$86k",
-#                               between(Income, 86286,148656) ~ "$86k-$148k",
-#                               Income > 148656 ~ "More than $148k"),
-#          adults_no=sum(c(Age20to29,Age30to54,Age55to64,Age65Plus)),
-#          adult_group=case_when(adults_no==0 ~ "0 adults",
-#                                adults_no==1 ~ "1 adult",
-#                                adults_no==2 ~ "2 adults",
-#                                adults_no>=3 ~ "3+ adults"),
-#          children_no=sum(c(Age15to19,Age0to14)),
-#          children_group=case_when(children_no==0 ~ "0 children",
-#                                   children_no %in% c(1,2) ~ "1-2 children",
-#                                   children_no>= 3 ~ "3+ children"),
-#          composition=paste(adult_group, children_group, sep=", "))
-# 
-# hh4<-fread("C:/Users/reid.haefer/OneDrive - Resource Systems Group, Inc/Documents/projects/ODOT/Household_STS.csv") %>% mutate(scenario="STS") %>% filter(Year==2050) %>%
-#   rowwise() %>%
-#   mutate(income_cat=case_when(Income < 23794 ~ "Less than $24k",
-#                               between(Income, 23794,50289) ~ "$24k-$50k",
-#                               between(Income, 50289,86286) ~ "$50k-$86k",
-#                               between(Income, 86286,148656) ~ "$86k-$148k",
-#                               Income > 148656 ~ "More than $148k"),
-#          adults_no=sum(c(Age20to29,Age30to54,Age55to64,Age65Plus)),
-#          adult_group=case_when(adults_no==0 ~ "0 adults",
-#                                adults_no==1 ~ "1 adult",
-#                                adults_no==2 ~ "2 adults",
-#                                adults_no>=3 ~ "3+ adults"),
-#          children_no=sum(c(Age15to19,Age0to14)),
-#          children_group=case_when(children_no==0 ~ "0 children",
-#                                   children_no %in% c(1,2) ~ "1-2 children",
-#                                   children_no>= 3 ~ "3+ children"),
-#          composition=paste(adult_group, children_group, sep=", "))
-# 
+
 # hh1_group<-hh1 %>%
 #   group_by(Azone,HhSize,Workers,HouseType,LocType,Vehicles,Drivers, composition,income_cat) %>%
 #   summarise(Dvmt=mean(Dvmt,na.rm=T),
@@ -104,8 +50,27 @@ library(scales)
 #             DailyGGE=mean(DailyGGE,na.rm=T),
 #             VehicleTrips=mean(VehicleTrips,na.rm=T),
 #             TransitTrips=mean(TransitTrips,na.rm=T)) %>% ungroup()
-# 
-#  write.csv(hh1_group,"h1group.csv", row.names=F)
+
+# write.csv(hh1_group,"h1group.csv", row.names=F)
+
+# hh2<-fread("Household_2050_Exp2_Good_Repair.csv") %>% #filter(Azone=="Baker") %>%
+#   mutate(scenario="two") %>% 
+#   rowwise() %>%
+#   mutate(income_cat=case_when(Income < 23794 ~ "Less than $24k",
+#                               between(Income, 23794,50289) ~ "$24k-$50k",
+#                               between(Income, 50289,86286) ~ "$50k-$86k",
+#                               between(Income, 86286,148656) ~ "$86k-$148k",
+#                               Income > 148656 ~ "More than $148k"),
+#          adults_no=sum(c(Age20to29,Age30to54,Age55to64,Age65Plus)),
+#          adult_group=case_when(adults_no==0 ~ "0 adults",
+#                                adults_no==1 ~ "1 adult",
+#                                adults_no==2 ~ "2 adults",
+#                                adults_no>=3 ~ "3+ adults"),
+#          children_no=sum(c(Age15to19,Age0to14)),
+#          children_group=case_when(children_no==0 ~ "0 children",
+#                                   children_no %in% c(1,2) ~ "1-2 children",
+#                                   children_no>= 3 ~ "3+ children"),
+#          composition=paste(adult_group, children_group, sep=", "))
 
 # hh2_group<-hh2 %>%
 #   group_by(Azone,HhSize,Workers,HouseType,LocType,Vehicles,Drivers, composition,income_cat)%>%
@@ -115,9 +80,28 @@ library(scales)
 #             DailyGGE=mean(DailyGGE,na.rm=T),
 #             VehicleTrips=mean(VehicleTrips,na.rm=T),
 #             TransitTrips=mean(TransitTrips,na.rm=T))%>% ungroup()
+
 # write.csv(hh2_group,"h2group.csv", row.names=F)
 
-
+# hh3<-fread("Household_2050_Exp3_Travel_Options.csv") %>% 
+#   # filter(Azone=="Baker")  %>%
+#   mutate(scenario="three", BikePMT=as.numeric(BikePMT))  %>%
+#   rowwise() %>%
+#   mutate(income_cat=case_when(Income < 23794 ~ "Less than $24k",
+#                               between(Income, 23794,50289) ~ "$24k-$50k",
+#                               between(Income, 50289,86286) ~ "$50k-$86k",
+#                               between(Income, 86286,148656) ~ "$86k-$148k",
+#                               Income > 148656 ~ "More than $148k"),
+#          adults_no=sum(c(Age20to29,Age30to54,Age55to64,Age65Plus)),
+#          adult_group=case_when(adults_no==0 ~ "0 adults",
+#                                adults_no==1 ~ "1 adult",
+#                                adults_no==2 ~ "2 adults",
+#                                adults_no>=3 ~ "3+ adults"),
+#          children_no=sum(c(Age15to19,Age0to14)),
+#          children_group=case_when(children_no==0 ~ "0 children",
+#                                   children_no %in% c(1,2) ~ "1-2 children",
+#                                   children_no>= 3 ~ "3+ children"),
+#          composition=paste(adult_group, children_group, sep=", "))
 
 # hh3_group<-hh3 %>%
 #   group_by(Azone,HhSize,Workers,HouseType,LocType,Vehicles,Drivers, composition,income_cat) %>%
@@ -127,7 +111,27 @@ library(scales)
 #             DailyGGE=mean(DailyGGE,na.rm=T),
 #             VehicleTrips=mean(VehicleTrips,na.rm=T),
 #             TransitTrips=mean(TransitTrips,na.rm=T))%>% ungroup()
+
 # write.csv(hh3_group,"h3group.csv", row.names=F)
+
+# hh4<-fread("Household_2050_Exp4_Balanced_Future.csv") %>% # filter(Azone=="Baker") 
+#   mutate(scenario="four") %>%
+#   rowwise() %>%
+#   mutate(income_cat=case_when(Income < 23794 ~ "Less than $24k",
+#                               between(Income, 23794,50289) ~ "$24k-$50k",
+#                               between(Income, 50289,86286) ~ "$50k-$86k",
+#                               between(Income, 86286,148656) ~ "$86k-$148k",
+#                               Income > 148656 ~ "More than $148k"),
+#          adults_no=sum(c(Age20to29,Age30to54,Age55to64,Age65Plus)),
+#          adult_group=case_when(adults_no==0 ~ "0 adults",
+#                                adults_no==1 ~ "1 adult",
+#                                adults_no==2 ~ "2 adults",
+#                                adults_no>=3 ~ "3+ adults"),
+#          children_no=sum(c(Age15to19,Age0to14)),
+#          children_group=case_when(children_no==0 ~ "0 children",
+#                                   children_no %in% c(1,2) ~ "1-2 children",
+#                                   children_no>= 3 ~ "3+ children"),
+#          composition=paste(adult_group, children_group, sep=", "))
 
 # hh4_group<-hh4 %>%
 #   group_by(Azone,HhSize,Workers,HouseType,LocType,Vehicles,Drivers, composition,income_cat)%>%
@@ -137,8 +141,38 @@ library(scales)
 #             DailyGGE=mean(DailyGGE,na.rm=T),
 #             VehicleTrips=mean(VehicleTrips,na.rm=T),
 #             TransitTrips=mean(TransitTrips,na.rm=T))%>% ungroup()
+
 # write.csv(hh4_group,"h4group.csv", row.names=F)
 
+# hh5<-fread("Household_2010_AP.csv") %>% # filter(Azone=="Baker") %>% 
+#   mutate(scenario="four") %>%
+#   rowwise() %>%
+#   mutate(income_cat=case_when(Income < 23794 ~ "Less than $24k",
+#                               between(Income, 23794,50289) ~ "$24k-$50k",
+#                               between(Income, 50289,86286) ~ "$50k-$86k",
+#                               between(Income, 86286,148656) ~ "$86k-$148k",
+#                               Income > 148656 ~ "More than $148k"),
+#          adults_no=sum(c(Age20to29,Age30to54,Age55to64,Age65Plus)),
+#          adult_group=case_when(adults_no==0 ~ "0 adults",
+#                                adults_no==1 ~ "1 adult",
+#                                adults_no==2 ~ "2 adults",
+#                                adults_no>=3 ~ "3+ adults"),
+#          children_no=sum(c(Age15to19,Age0to14)),
+#          children_group=case_when(children_no==0 ~ "0 children",
+#                                   children_no %in% c(1,2) ~ "1-2 children",
+#                                   children_no>= 3 ~ "3+ children"),
+#          composition=paste(adult_group, children_group, sep=", "))
+
+# hh5_group<-hh5 %>%
+#   group_by(Azone,HhSize,Workers,HouseType,LocType,Vehicles,Drivers, composition,income_cat)%>%
+#   summarise(Dvmt=mean(Dvmt,na.rm=T),
+#             AveVehCostPM=mean(AveVehCostPM,na.rm=T),
+#             DailyCO2e=mean(DailyCO2e,na.rm=T),
+#             DailyGGE=mean(DailyGGE,na.rm=T),
+#             VehicleTrips=mean(VehicleTrips,na.rm=T),
+#             TransitTrips=mean(TransitTrips,na.rm=T))%>% ungroup()
+
+# write.csv(hh5_group,"h5group.csv", row.names=F)
 
 ###### Read in Summarized VE Outputs ######
 
