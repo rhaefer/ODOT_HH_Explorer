@@ -1,3 +1,5 @@
+###### Tool dependencies ######
+
 library(tidyverse)
 library(shiny)
 library(data.table)
@@ -11,8 +13,7 @@ library(sf)
 library(mapview)
 library(scales)
 
-
-
+###### Data Prep - Ignore ######
 
 # https://nhts.ornl.gov/tables09/CodebookPage.aspx?id=960
 # 
@@ -106,22 +107,6 @@ library(scales)
 # 
 #  write.csv(hh1_group,"h1group.csv", row.names=F)
 
-hh1_group<-read_csv("h5group.csv") %>%
-  mutate(scenario="hh1")
-
-hh2_group<-read_csv("h1group.csv") %>%
-  mutate(scenario="hh2")
-
-hh3_group<-read_csv("h2group.csv") %>%
-  mutate(scenario="hh3")
-
-hh4_group<-read_csv("h3group.csv")%>%
-  mutate(scenario="h4")
-
-hh5_group<-read_csv("h4group.csv") %>%
-  mutate(scenario="hh5")
-
-
 # hh2_group<-hh2 %>%
 #   group_by(Azone,HhSize,Workers,HouseType,LocType,Vehicles,Drivers, composition,income_cat)%>%
 #   summarise(Dvmt=mean(Dvmt,na.rm=T),
@@ -144,8 +129,6 @@ hh5_group<-read_csv("h4group.csv") %>%
 #             TransitTrips=mean(TransitTrips,na.rm=T))%>% ungroup()
 # write.csv(hh3_group,"h3group.csv", row.names=F)
 
-
-
 # hh4_group<-hh4 %>%
 #   group_by(Azone,HhSize,Workers,HouseType,LocType,Vehicles,Drivers, composition,income_cat)%>%
 #   summarise(Dvmt=mean(Dvmt,na.rm=T),
@@ -157,6 +140,22 @@ hh5_group<-read_csv("h4group.csv") %>%
 # write.csv(hh4_group,"h4group.csv", row.names=F)
 
 
+###### Read in Summarized VE Outputs ######
+
+hh1_group<-read_csv("h5group.csv") %>%
+  mutate(scenario="hh1")
+
+hh2_group<-read_csv("h1group.csv") %>%
+  mutate(scenario="hh2")
+
+hh3_group<-read_csv("h2group.csv") %>%
+  mutate(scenario="hh3")
+
+hh4_group<-read_csv("h3group.csv")%>%
+  mutate(scenario="h4")
+
+hh5_group<-read_csv("h4group.csv") %>%
+  mutate(scenario="hh5")
 
 all<- bind_rows(hh1_group, hh2_group, hh3_group, hh4_group) %>%
   filter(!composition %in% c("0 adults, 1-2 children","0 adults, 3+ children"))
@@ -167,7 +166,7 @@ inc <- unique(all$income_cat)
 
 linebreaks <- function(n){HTML(strrep(br(), n))}
 
-############ dashboard ##################
+############ Shiny Tool Code ##################
 
 ui <- dashboardPage(skin="black", 
                     dashboardHeader(title="Oregon Household Scenario Explorer",titleWidth = 450),
@@ -183,8 +182,7 @@ ui <- dashboardPage(skin="black",
                                                      h3(tags$b("Tool Usage")),
                                                      h4('The summary data tab displays the average of individual household records from the scenarios and allows the user to interactively select different household characteristics (personas) and observe key summary metrics. The summary data points represent the percent change in future scenarios from the base year. The displayed information is the average of all households characterized by the selected drop down input values. Select values from the dropdowns and observe how percentages change over different scenarios. The household characteristics you can select include County, Household Size, Household Composition, # of Workers, Housing Type, Location, # of Vehicles, and # of Drivers.'),
                                                      linebreaks(1),
-                                                     tags$p("The full model methodology (code) can be found on",tags$a(href="https://github.com/trpa-reid/tahoe_effective_population_model/blob/main/script.R", "Github")),
-                                                     linebreaks(1),
+                                                     h4(tags$p("The full tool code can be found on",tags$a(href="https://github.com/rhaefer/ODOT_HH_Explorer/blob/master/app.R", "Github"))),
                                                      h4("..."),
                                                      linebreaks(2),
                                                      img(src='RSG Logo.jpg',  height = 80, width = 250)
