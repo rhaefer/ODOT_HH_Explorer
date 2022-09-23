@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1632846612500.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "C0B364F9",
+    "lastKnownWriteTime" : 1632847809,
+    "last_content_update" : 1632847809707,
+    "path" : "E:/Projects/Clients/odot/ODOT_VEState/Github/built/mm_model/4.1.0/runtime/models/app.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "330,62",
+        "scrollLine" : "259"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

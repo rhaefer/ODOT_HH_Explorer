@@ -1,0 +1,13 @@
+name: ODOT_HH_Explorer
+title: ODOT_HH_Explorer
+username:
+account: rsginc
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4770643
+bundleId: 5404672
+url: https://rsginc.shinyapps.io/ODOT_HH_Explorer/
+when: 1640276742.70035
+lastSyncTime: 1640276742.70035
+asMultiple: FALSE
+asStatic: FALSE

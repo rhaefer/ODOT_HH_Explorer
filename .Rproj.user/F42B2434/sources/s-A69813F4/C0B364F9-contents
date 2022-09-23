@@ -1,0 +1,341 @@
+library(tidyverse)
+library(shiny)
+library(data.table)
+library(shinydashboard)
+library(shinyjs)
+library(shinyBS)
+library(shinycssloaders)
+library(DT)
+
+hh1<-fread("Household_Common.csv") %>% mutate(scenario="common") 
+hh2<-fread("Household_Common_MM.csv") %>% mutate(scenario="mm_common")
+hh3<-fread("Household_STS_MM.csv") %>% mutate(scenario="mm_STS", BikePMT=as.numeric(BikePMT))  %>% filter(Year==2050)
+hh4<-fread("Household_STS.csv") %>% mutate(scenario="STS") %>% filter(Year==2050)
+
+hh1_group<-hh1 %>%
+  group_by(Azone,HhSize,Workers,HouseType,LocType,Vehicles,Drivers) %>%
+  summarise(Dvmt=mean(Dvmt,na.rm=T),
+            AveVehCostPM=mean(AveVehCostPM,na.rm=T),
+            DailyCO2e=mean(DailyCO2e,na.rm=T),
+            DailyGGE=mean(DailyGGE,na.rm=T),
+            VehicleTrips=mean(VehicleTrips,na.rm=T),
+            TransitTrips=mean(TransitTrips,na.rm=T)) %>% ungroup()
+
+hh2_group<-hh2 %>%
+  group_by(Azone,HhSize,Workers,HouseType,LocType,Vehicles,Drivers) %>%
+  summarise(Dvmt=mean(Dvmt,na.rm=T),
+            AveVehCostPM=mean(AveVehCostPM,na.rm=T),
+            DailyCO2e=mean(DailyCO2e,na.rm=T),
+            DailyGGE=mean(DailyGGE,na.rm=T),
+            VehicleTrips=mean(VehicleTrips,na.rm=T),
+            TransitTrips=mean(TransitTrips,na.rm=T))%>% ungroup()
+
+hh3_group<-hh3 %>%
+  group_by(Azone,HhSize,Workers,HouseType,LocType,Vehicles,Drivers) %>%
+  summarise(Dvmt=mean(Dvmt,na.rm=T),
+            AveVehCostPM=mean(AveVehCostPM,na.rm=T),
+            DailyCO2e=mean(DailyCO2e,na.rm=T),
+            DailyGGE=mean(DailyGGE,na.rm=T),
+            VehicleTrips=mean(VehicleTrips,na.rm=T),
+            TransitTrips=mean(TransitTrips,na.rm=T))%>% ungroup()
+
+hh4_group<-hh4 %>%
+  group_by(Azone,HhSize,Workers,HouseType,LocType,Vehicles,Drivers) %>%
+  summarise(Dvmt=mean(Dvmt,na.rm=T),
+            AveVehCostPM=mean(AveVehCostPM,na.rm=T),
+            DailyCO2e=mean(DailyCO2e,na.rm=T),
+            DailyGGE=mean(DailyGGE,na.rm=T),
+            VehicleTrips=mean(VehicleTrips,na.rm=T),
+            TransitTrips=mean(TransitTrips,na.rm=T))%>% ungroup()
+
+
+all<- bind_rows(hh1_group, hh2_group, hh3_group, hh4_group) 
+
+#write.csv(all, "data.csv")
+
+read_csv()
+
+counties <- unique(all$Azone)
+hh_size <- unique(all$HhSize)
+
+# updateSelectizeInput(session=session, inputId ='hh', choices = unique(all$HhId), server = TRUE)
+
+############ dashboard ##################
+
+ui <- dashboardPage(skin="black", 
+                    dashboardHeader(title="Household Scenario Explorer",titleWidth = 350),
+                    dashboardSidebar(),
+                    dashboardBody(
+                      fluidRow(box(title="Select Household Characteristics",
+                                   column(1,selectInput("input_azone","County", choices=counties)), 
+                                   column(1,selectInput("input_hh","Household Size", choices=hh_size)), 
+                                   column(1,selectInput("input_workers","# of Workers", choices=unique(all$Workers))), 
+                                   column(1,selectInput("input_house_type","House Type", choices=unique(all$HouseType))),
+                                   column(1,selectInput("input_loc_type","Location Type", choices=unique(all$LocType))),
+                                   column(1,selectInput("input_vehicles","# of Vehicles", choices=unique(all$Vehicles))),
+                                   column(1,selectInput("input_drivers","# of Drivers", choices=unique(all$Drivers))),
+                                   # column(2,selectInput("input_income","Household Income",choices=unique(all$income_round))), 
+                                   width=12)
+                      ),
+                      fluidRow(box(title="Scenario 1 - Household summary", status="primary", solidHeader = F,
+                                   column(2,valueBoxOutput("dvmt_1", width=12) %>% withSpinner()),  
+                                   column(2,valueBoxOutput("veh_trips_1", width=12)),
+                                   column(2,valueBoxOutput("tran_trips_1", width=12)),
+                                   column(2,valueBoxOutput("gge_1", width=12)),
+                                   column(2,valueBoxOutput("cost_1", width=12)),
+                                   column(2,valueBoxOutput("co2_1", width=12)),
+                                   width=12)
+                      ),
+                      fluidRow(box(title="Scenario 2 - Household summary",status="success", solidHeader = F,
+                                   column(2,valueBoxOutput("dvmt_2", width=12) %>% withSpinner()),  
+                                   column(2,valueBoxOutput("veh_trips_2", width=12)),
+                                   column(2,valueBoxOutput("tran_trips_2", width=12)),
+                                   column(2,valueBoxOutput("gge_2", width=12)),
+                                   column(2,valueBoxOutput("cost_2", width=12)),
+                                   column(2,valueBoxOutput("co2_2", width=12)),
+                                   width=12)
+                      ),
+                      fluidRow(box(title="Scenario 3 - Household summary", status="primary", solidHeader = F,
+                                   column(2,valueBoxOutput("dvmt_3", width=12) %>% withSpinner()),  
+                                   column(2,valueBoxOutput("veh_trips_3", width=12)),
+                                   column(2,valueBoxOutput("tran_trips_3", width=12)),
+                                   column(2,valueBoxOutput("gge_3", width=12)),
+                                   column(2,valueBoxOutput("cost_3", width=12)),
+                                   column(2,valueBoxOutput("co2_3", width=12)),
+                                   width=12)
+                      ),
+                      fluidRow(box(title="Scenario 4 - Household summary", status="success",solidHeader = F,
+                                   column(2,valueBoxOutput("dvmt_4", width=12) %>% withSpinner()),  
+                                   column(2,valueBoxOutput("veh_trips_4", width=12)),
+                                   column(2,valueBoxOutput("tran_trips_4", width=12)),
+                                   column(2,valueBoxOutput("gge_4", width=12)),
+                                   column(2,valueBoxOutput("cost_4", width=12)),
+                                   column(2,valueBoxOutput("co2_4", width=12)),
+                                   width=12)
+                      )
+                    )
+)
+server <- function(input, output, session) { 
+  # scenario 1
+  output$dvmt_1 <-renderValueBox({
+    valueBox(hh1_group %>% filter(  Azone ==input$input_azone & 
+                                HhSize ==input$input_hh& 
+                                Workers ==input$input_workers & 
+                                HouseType ==input$input_house_type &
+                                LocType ==input$input_loc_type &
+                                Vehicles ==input$input_vehicles&
+                                Drivers ==input$input_drivers) %>% summarise(Dvmt=round(mean(Dvmt, na.rm=T),1)) %>% pull(), "Daily VMT", width=12, color="navy")
+  })
+  output$gge_1 <-renderValueBox({
+    valueBox(hh1_group %>% filter(  Azone ==input$input_azone & 
+                                HhSize ==input$input_hh& 
+                                Workers ==input$input_workers & 
+                                HouseType ==input$input_house_type &
+                                LocType ==input$input_loc_type &
+                                Vehicles ==input$input_vehicles&
+                                Drivers ==input$input_drivers) %>% summarise(DailyGGE=round(mean(DailyGGE, na.rm=T),1)) %>% pull(), "Daily GHG", width=12, color="navy")
+  })
+  output$cost_1 <-renderValueBox({
+    valueBox(hh1_group %>% filter(  Azone ==input$input_azone & 
+                                HhSize ==input$input_hh& 
+                                Workers ==input$input_workers & 
+                                HouseType ==input$input_house_type &
+                                LocType ==input$input_loc_type &
+                                Vehicles ==input$input_vehicles&
+                                Drivers ==input$input_drivers) %>% summarise(AveVehCostPM=round(mean(AveVehCostPM, na.rm=T),1)) %>% pull(), "Vehicle Cost", width=12, color="navy")
+  })
+  output$co2_1 <-renderValueBox({
+    valueBox(hh1_group %>% filter(  Azone ==input$input_azone & 
+                                HhSize ==input$input_hh& 
+                                Workers ==input$input_workers & 
+                                HouseType ==input$input_house_type &
+                                LocType ==input$input_loc_type &
+                                Vehicles ==input$input_vehicles&
+                                Drivers ==input$input_drivers) %>% summarise(DailyCO2e=round(mean(DailyCO2e, na.rm=T),1)) %>% pull(), "Daily CO2", width=12, color="navy")
+  })
+  output$veh_trips_1 <-renderValueBox({
+    valueBox(hh1_group %>% filter(Azone ==input$input_azone & 
+                              HhSize ==input$input_hh& 
+                              Workers ==input$input_workers & 
+                              HouseType ==input$input_house_type &
+                              LocType ==input$input_loc_type &
+                              Vehicles ==input$input_vehicles&
+                              Drivers ==input$input_drivers) %>% summarise(VehicleTrips=round(mean(VehicleTrips, na.rm=T),1)) %>% pull(), "Vehicle Trips", width=12, color="navy")
+  })
+  output$tran_trips_1 <-renderValueBox({
+    valueBox(hh1_group %>% filter(Azone ==input$input_azone & 
+                              HhSize ==input$input_hh& 
+                              Workers ==input$input_workers & 
+                              HouseType ==input$input_house_type &
+                              LocType ==input$input_loc_type &
+                              Vehicles ==input$input_vehicles&
+                              Drivers ==input$input_drivers) %>% summarise(TransitTrips=round(mean(TransitTrips, na.rm=T),1)) %>% pull(), "Transit Trips", width=12, color="navy")
+  })
+  # scenario 2
+  output$dvmt_2 <-renderValueBox({
+    valueBox(hh4_group %>% filter(Azone ==input$input_azone & 
+                              HhSize ==input$input_hh& 
+                              Workers ==input$input_workers & 
+                              HouseType ==input$input_house_type &
+                              LocType ==input$input_loc_type &
+                              Vehicles ==input$input_vehicles&
+                              Drivers ==input$input_drivers) %>% summarise(Dvmt=round(mean(Dvmt, na.rm=T),1)) %>% pull(), "Dvmt", width=12, color="navy")
+  })
+  output$veh_trips_2 <-renderValueBox({
+    valueBox(hh4_group %>% filter(Azone ==input$input_azone & 
+                              HhSize ==input$input_hh& 
+                              Workers ==input$input_workers & 
+                              HouseType ==input$input_house_type &
+                              LocType ==input$input_loc_type &
+                              Vehicles ==input$input_vehicles&
+                              Drivers ==input$input_drivers) %>% summarise(VehicleTrips=round(mean(VehicleTrips, na.rm=T),1)) %>% pull(), "Vehicle Trips", width=12, color="navy")
+  })
+  output$gge_2 <-renderValueBox({
+    valueBox(hh4_group %>% filter(  Azone ==input$input_azone & 
+                                HhSize ==input$input_hh& 
+                                Workers ==input$input_workers & 
+                                HouseType ==input$input_house_type &
+                                LocType ==input$input_loc_type &
+                                Vehicles ==input$input_vehicles&
+                                Drivers ==input$input_drivers) %>% summarise(DailyGGE=round(mean(DailyGGE, na.rm=T),1)) %>% pull(), "Daily GHG", width=12, color="navy")
+  })
+  output$cost_2 <-renderValueBox({
+    valueBox(hh4_group %>% filter(  Azone ==input$input_azone & 
+                                HhSize ==input$input_hh& 
+                                Workers ==input$input_workers & 
+                                HouseType ==input$input_house_type &
+                                LocType ==input$input_loc_type &
+                                Vehicles ==input$input_vehicles&
+                                Drivers ==input$input_drivers) %>% summarise(AveVehCostPM=round(mean(AveVehCostPM, na.rm=T),1)) %>% pull(), "Vehicle Cost", width=12, color="navy")
+  })
+  output$co2_2 <-renderValueBox({
+    valueBox(hh4_group %>% filter(  Azone ==input$input_azone & 
+                                HhSize ==input$input_hh& 
+                                Workers ==input$input_workers & 
+                                HouseType ==input$input_house_type &
+                                LocType ==input$input_loc_type &
+                                Vehicles ==input$input_vehicles&
+                                Drivers ==input$input_drivers) %>% summarise(DailyCO2e=round(mean(DailyCO2e, na.rm=T),1)) %>% pull(), "Daily CO2", width=12, color="navy")
+  })
+  output$tran_trips_2 <-renderValueBox({
+    valueBox(hh4_group %>% filter(Azone ==input$input_azone & 
+                              HhSize ==input$input_hh& 
+                              Workers ==input$input_workers & 
+                              HouseType ==input$input_house_type &
+                              LocType ==input$input_loc_type &
+                              Vehicles ==input$input_vehicles&
+                              Drivers ==input$input_drivers) %>% summarise(TransitTrips=round(mean(TransitTrips, na.rm=T),1)) %>% pull(), "Transit Trips", width=12, color="navy")
+  })
+  # scenario 3
+  output$dvmt_3 <-renderValueBox({
+    valueBox(hh2_group %>% filter(Azone ==input$input_azone & 
+                              HhSize ==input$input_hh& 
+                              Workers ==input$input_workers & 
+                              HouseType ==input$input_house_type &
+                              LocType ==input$input_loc_type &
+                              Vehicles ==input$input_vehicles&
+                              Drivers ==input$input_drivers) %>% summarise(Dvmt=round(mean(Dvmt, na.rm=T),1)) %>% pull(), "Dvmt", width=12, color="navy")
+  })
+  output$veh_trips_3 <-renderValueBox({
+    valueBox(hh2_group %>% filter(Azone ==input$input_azone & 
+                              HhSize ==input$input_hh& 
+                              Workers ==input$input_workers & 
+                              HouseType ==input$input_house_type &
+                              LocType ==input$input_loc_type &
+                              Vehicles ==input$input_vehicles&
+                              Drivers ==input$input_drivers) %>% summarise(VehicleTrips=round(mean(VehicleTrips, na.rm=T),1)) %>% pull(), "Vehicle Trips", width=12, color="navy")
+  })
+  output$gge_3 <-renderValueBox({
+    valueBox(hh2_group %>% filter(  Azone ==input$input_azone & 
+                                HhSize ==input$input_hh& 
+                                Workers ==input$input_workers & 
+                                HouseType ==input$input_house_type &
+                                LocType ==input$input_loc_type &
+                                Vehicles ==input$input_vehicles&
+                                Drivers ==input$input_drivers) %>% summarise(DailyGGE=round(mean(DailyGGE, na.rm=T),1)) %>% pull(), "Daily GHG", width=12, color="navy")
+  })
+  output$cost_3 <-renderValueBox({
+    valueBox(hh2_group %>% filter(  Azone ==input$input_azone & 
+                                HhSize ==input$input_hh& 
+                                Workers ==input$input_workers & 
+                                HouseType ==input$input_house_type &
+                                LocType ==input$input_loc_type &
+                                Vehicles ==input$input_vehicles&
+                                Drivers ==input$input_drivers) %>% summarise(AveVehCostPM=round(mean(AveVehCostPM, na.rm=T),1)) %>% pull(), "Vehicle Cost", width=12, color="navy")
+  })
+  output$co2_3 <-renderValueBox({
+    valueBox(hh2_group %>% filter(  Azone ==input$input_azone & 
+                                HhSize ==input$input_hh& 
+                                Workers ==input$input_workers & 
+                                HouseType ==input$input_house_type &
+                                LocType ==input$input_loc_type &
+                                Vehicles ==input$input_vehicles&
+                                Drivers ==input$input_drivers) %>% summarise(DailyCO2e=round(mean(DailyCO2e, na.rm=T),1)) %>% pull(), "Daily CO2", width=12, color="navy")
+  })
+  output$tran_trips_3 <-renderValueBox({
+    valueBox(hh2_group %>% filter(Azone ==input$input_azone & 
+                              HhSize ==input$input_hh& 
+                              Workers ==input$input_workers & 
+                              HouseType ==input$input_house_type &
+                              LocType ==input$input_loc_type &
+                              Vehicles ==input$input_vehicles&
+                              Drivers ==input$input_drivers) %>% summarise(TransitTrips=round(mean(TransitTrips, na.rm=T),1)) %>% pull(), "Transit Trips", width=12, color="navy")
+  })
+  # scenario 4
+  output$dvmt_4 <-renderValueBox({
+    valueBox(hh3_group %>% filter(Azone ==input$input_azone & 
+                              HhSize ==input$input_hh& 
+                              Workers ==input$input_workers & 
+                              HouseType ==input$input_house_type &
+                              LocType ==input$input_loc_type &
+                              Vehicles ==input$input_vehicles&
+                              Drivers ==input$input_drivers) %>% summarise(Dvmt=round(mean(Dvmt, na.rm=T),1)) %>% pull(), "Dvmt", width=12, color="navy")
+  })
+  output$veh_trips_4 <-renderValueBox({
+    valueBox(hh3_group %>% filter(Azone ==input$input_azone & 
+                              HhSize ==input$input_hh& 
+                              Workers ==input$input_workers & 
+                              HouseType ==input$input_house_type &
+                              LocType ==input$input_loc_type &
+                              Vehicles ==input$input_vehicles&
+                              Drivers ==input$input_drivers) %>% summarise(VehicleTrips=round(mean(VehicleTrips, na.rm=T),1)) %>% pull(), "Vehicle Trips", width=12, color="navy")
+  })
+  output$gge_4 <-renderValueBox({
+    valueBox(hh3_group %>% filter(  Azone ==input$input_azone & 
+                                HhSize ==input$input_hh& 
+                                Workers ==input$input_workers & 
+                                HouseType ==input$input_house_type &
+                                LocType ==input$input_loc_type &
+                                Vehicles ==input$input_vehicles&
+                                Drivers ==input$input_drivers) %>% summarise(DailyGGE=round(mean(DailyGGE, na.rm=T),1)) %>% pull(), "Daily GHG", width=12, color="navy")
+  })
+  output$cost_4 <-renderValueBox({
+    valueBox(hh3_group %>% filter(  Azone ==input$input_azone & 
+                                HhSize ==input$input_hh& 
+                                Workers ==input$input_workers & 
+                                HouseType ==input$input_house_type &
+                                LocType ==input$input_loc_type &
+                                Vehicles ==input$input_vehicles&
+                                Drivers ==input$input_drivers) %>% summarise(AveVehCostPM=round(mean(AveVehCostPM, na.rm=T),1)) %>% pull(), "Vehicle Cost", width=12, color="navy")
+  })
+  output$co2_4 <-renderValueBox({
+    valueBox(hh3_group %>% filter(  Azone ==input$input_azone & 
+                                HhSize ==input$input_hh& 
+                                Workers ==input$input_workers & 
+                                HouseType ==input$input_house_type &
+                                LocType ==input$input_loc_type &
+                                Vehicles ==input$input_vehicles&
+                                Drivers ==input$input_drivers) %>% summarise(DailyCO2e=round(mean(DailyCO2e, na.rm=T),1)) %>% pull(), "Daily CO2", width=12, color="navy")
+  })
+  output$tran_trips_4 <-renderValueBox({
+    valueBox(hh3_group %>% filter(Azone ==input$input_azone & 
+                              HhSize ==input$input_hh& 
+                              Workers ==input$input_workers & 
+                              HouseType ==input$input_house_type &
+                              LocType ==input$input_loc_type &
+                              Vehicles ==input$input_vehicles&
+                              Drivers ==input$input_drivers) %>% summarise(TransitTrips=round(mean(TransitTrips, na.rm=T),1)) %>% pull(), "Transit Trips", width=12, color="navy")
+  })
+}
+shinyApp(ui, server)
+
