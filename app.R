@@ -16,7 +16,7 @@ library(readxl)
 
 ###### Data Prep - Summarize Raw VE Outputs ######
 
-#results <-  read_excel("ODOT_TMIP_MMRESULTS.xlsm", sheet="results_raw")
+test <- read_csv("27Sept_mmresults.csv")
 
 # percentile_fn <- function(x){
 #   results %>% mutate(
@@ -40,6 +40,7 @@ library(readxl)
 # )
 
 
+#jon_results <- read_csv("17Aug_Results.csv")
 
 mapping <- read_excel("ODOT_TMIP_MMRESULTS.xlsm", sheet="Sheet3")
 
@@ -154,31 +155,31 @@ ui <- dashboardPage(skin="black",
                                                 fluidRow(
                                                 box(width=12, title="Equity", status = "primary",solidHeader = T,
                                                     column(width=3,
-                                                    numericInput("goal_pri_equity","Goal", value=1, min=1, max=100)
+                                                    numericInput("goal_pri_equity","Goal", value=1, min=0, max=100)
                                                     ),
                                                     column(width=4,
-                                                           numericInput("obj_pri_eq1","Objective 1 - text text text text", value=1, min=1, max=100)
+                                                           numericInput("obj_pri_eq1","Objective 1 - text text text text", value=1, min=0, max=100)
                                                            ),
                                                     column(width=4,
-                                                           numericInput("pol_pri_OwnCostPropHhLess25K","OwnCostPropHhLess25K", value=1, min=1, max=100),
-                                                           numericInput("pol_pri_OwnCostProp","OwnCostProp", value=1, min=1, max=100),
-                                                           numericInput("pol_pri_OwnCostPropHh25Kto50K","OwnCostPropHh25Kto50K", value=1, min=1, max=100)
+                                                           numericInput("pol_pri_OwnCostPropHhLess25K","OwnCostPropHhLess25K", value=1, min=0, max=100),
+                                                           numericInput("pol_pri_OwnCostProp","OwnCostProp", value=1, min=0, max=100),
+                                                           numericInput("pol_pri_OwnCostPropHh25Kto50K","OwnCostPropHh25Kto50K", value=1, min=0, max=100)
                                                     )
                                                     )
                                                 ),
                                                 fluidRow(
                                                 box(width=12, title="Safety", status = "info",solidHeader = T,
                                                     column(width=3,
-                                                    numericInput("goal_pri_safety","Goal", value=1, min=1, max=100)
+                                                    numericInput("goal_pri_safety","Goal", value=1, min=0, max=100)
                                                     ),
                                                     column(width=4,
-                                                           numericInput("obj_pri_sfty1","Objective 1 - text text text", value=1, min=1, max=100)
+                                                           numericInput("obj_pri_sfty1","Objective 1 - text text text", value=1, min=0, max=100)
                                                     ),
                                                     column(width=4,
-                                                           numericInput("pol_pri_AutoFatalCrash_Metro","AutoFatalCrash_Metro", value=1, min=1, max=100),
-                                                           numericInput("pol_pri_AutoFatalUrban","AutoFatalUrban", value=1, min=1, max=100),
-                                                           numericInput("pol_pri_AutoInjuryUrban","AutoInjuryUrban", value=1, min=1, max=100),
-                                                           numericInput("pol_pri_AutoFatalRural","AutoFatalRural", value=1, min=1, max=100)
+                                                           numericInput("pol_pri_AutoFatalCrash_Metro","AutoFatalCrash_Metro", value=1, min=0, max=100),
+                                                           numericInput("pol_pri_AutoFatalUrban","AutoFatalUrban", value=1, min=0, max=100),
+                                                           numericInput("pol_pri_AutoInjuryUrban","AutoInjuryUrban", value=1, min=0, max=100),
+                                                           numericInput("pol_pri_AutoFatalRural","AutoFatalRural", value=1, min=0, max=100)
                                                     )
                                                 )
                                             ),
@@ -186,27 +187,28 @@ ui <- dashboardPage(skin="black",
                                                 box(width=12, title="Sustainability", status = "warning",solidHeader = T,
                                                     fluidRow(
                                                     column(width=3,
-                                                      numericInput("goal_pri_sust","Goal", value=1, min=1, max=100)
+                                                      numericInput("goal_pri_sust","Goal", value=1, min=0, max=100)
                                                     ),column(width=4,
-                                                             numericInput("obj_pri_sust1","Objective 1 - Reduce GHG emissions", value=1, min=1, max=100),
+                                                             numericInput("obj_pri_sust1","Objective 1 - Reduce GHG emissions", value=1, min=0, max=100),
                                                              br(),
                                                              br(),
                                                              br()
                                                              ),
                                                     column(width=5,
-                                                           numericInput("pol_pri_TotalCO2e","TotalCO2e", value=1, min=1, max=100),
-                                                           numericInput("pol_pri_HouseholdCO2ePerPrsn","HouseholdCO2ePerPrsn", value=1, min=1, max=100),
-                                                           numericInput("pol_pri_HouseholdCO2ePerMileRural","HouseholdCO2ePerMileRural", value=1, min=1, max=100)
+                                                           numericInput("pol_pri_TotalCO2e","TotalCO2e", value=1, min=0, max=100),
+                                                           numericInput("pol_pri_HouseholdCO2ePerPrsn","HouseholdCO2ePerPrsn", value=1, min=0, max=100),
+                                                           numericInput("pol_pri_HouseholdCO2ePerMileRural","HouseholdCO2ePerMileRural", value=1, min=0, max=100)
                                                     )      
                                                     ),
                                                     br(),
                                                     fluidRow(
                                                       column(width=3),
                                                       column(width=4,
-                                                             numericInput("obj_pri_sust2","Objective 2 - Cleaner vehicles and energy efficiency", value=1, min=1, max=100)),
+                                                             numericInput("obj_pri_sust2","Objective 2 - Cleaner vehicles and energy efficiency", value=1, min=0, max=100)),
                                                     column(width=4,
-                                                             numericInput("pol_pri_BusCO2eRate_Metro","BusCO2eRate_Metro", value=1, min=1, max=100),
-                                                             numericInput("pol_pri_HvyTrkAveUrbanCO2eRate_Metro","HvyTrkAveUrbanCO2eRate_Metro", value=1, min=1, max=100)
+                                                             numericInput("pol_pri_BusCO2eRate_Metro","BusCO2eRate_Metro", value=1, min=0, max=100),
+                                                             numericInput("pol_pri_HvyTrkAveUrbanCO2eRate_Metro","HvyTrkAveUrbanCO2eRate_Metro", value=1, min=0, max=100),
+                                                           numericInput("pol_pri_ElecDvmtProp","ElecDvmtProp", value=1, min=0, max=100)
                                                     )
                                                     )
                                                 )
@@ -216,13 +218,13 @@ ui <- dashboardPage(skin="black",
                                                  fluidRow(
                                                    box(width=12, title="Stewardship", status = "info",solidHeader = T,
                                                        column(width=3,
-                                                              numericInput("goal_pri_stew","Goal", value=1, min=1, max=100)
+                                                              numericInput("goal_pri_stew","Goal", value=1, min=0, max=100)
                                                        ),
                                                        column(width=4,
-                                                              numericInput("goal_pri_stew1","Objective (Goal)", value=1, min=1, max=100)
+                                                              numericInput("goal_pri_stew1","Objective (Goal)", value=1, min=0, max=100)
                                                        ),
                                                        column(width=4,
-                                                              numericInput("pol_pri_PresAdapt_2022","PresAdapt$22", value=1, min=1, max=100)
+                                                              numericInput("pol_pri_PresAdapt_2022","PresAdapt$22", value=1, min=0, max=100)
                                                        )
                                                    )
                                                  ),
@@ -230,40 +232,40 @@ ui <- dashboardPage(skin="black",
                                                    box(width=12, title="Mobility", status = "success",solidHeader = T,
                                                        fluidRow(
                                                        column(width=3,
-                                                              numericInput("goal_pri_mob","Goal", value=1, min=1, max=100)
+                                                              numericInput("goal_pri_mob","Goal", value=1, min=0, max=100)
                                                        ),
                                                        column(width=4,
                                                               numericInput("obj_pri_mob1","Objective 1 -  Complete, maintain, and improve multimodal transportation facilities and services that are essential to Oregonians’ prosperity and quality of life.", value=1, min=0, max=100) 
                                                        ),
                                                        column(width=5,
-                                                              numericInput("pol_pri_BikePMTPerPrsnUrban","BikePMTPerPrsnUrban", value=1, min=1, max=100),
-                                                              numericInput("pol_pri_WalkPMTPerPrsnUrban","WalkPMTPerPrsnUrban", value=1, min=1, max=100),
-                                                              numericInput("pol_pri_TransitTripsPerCapita","TransitTripsPerCapita", value=1, min=1, max=100),
-                                                              numericInput("pol_pri_TransitPMTPerPrsnUrban","TransitPMTPerPrsnUrban", value=1, min=1, max=100),
-                                                              numericInput("pol_pri_BikeTripsPerCapita","BikeTripsPerCapita", value=1, min=1, max=100),
-                                                              numericInput("pol_pri_WalkTripsPerCapita","WalkTripsPerCapita", value=1, min=1, max=100),
+                                                              numericInput("pol_pri_BikePMTPerPrsnUrban","BikePMTPerPrsnUrban", value=1, min=0, max=100),
+                                                              numericInput("pol_pri_WalkPMTPerPrsnUrban","WalkPMTPerPrsnUrban", value=1, min=0, max=100),
+                                                              numericInput("pol_pri_TransitTripsPerCapita","TransitTripsPerCapita", value=1, min=0, max=100),
+                                                              numericInput("pol_pri_TransitPMTPerPrsnUrban","TransitPMTPerPrsnUrban", value=1, min=0, max=100),
+                                                              numericInput("pol_pri_BikeTripsPerCapita","BikeTripsPerCapita", value=1, min=0, max=100),
+                                                              numericInput("pol_pri_WalkTripsPerCapita","WalkTripsPerCapita", value=1, min=0, max=100),
                                                               ),
                                                        ),
                                                        br(),
                                                        fluidRow(
                                                          column(width=3),
                                                          column(width=4,
-                                                              numericInput("obj_pri_mob2","Objective 2 - Reduce passenger vehicle miles traveled (VMT) per capita.", value=1, min=1, max=100)
+                                                              numericInput("obj_pri_mob2","Objective 2 - Reduce passenger vehicle miles traveled (VMT) per capita.", value=1, min=0, max=100)
                                                          ),
                                                          column(width = 5,
-                                                                numericInput("pol_pri_HouseholdDvmtPerPrsn","HouseholdDvmtPerPrsn", value=1, min=1, max=100),
-                                                                numericInput("pol_pri_TotalDvmtPerPrsn","TotalDvmtPerPrsn", value=1, min=1, max=100),
+                                                                numericInput("pol_pri_HouseholdDvmtPerPrsn","HouseholdDvmtPerPrsn", value=1, min=0, max=100),
+                                                                numericInput("pol_pri_TotalDvmtPerPrsn","TotalDvmtPerPrsn", value=1, min=0, max=100),
                                                                 )
                                                          ),
                                                        br(),
                                                        fluidRow(
                                                          column(width=3),
                                                          column(width=4,
-                                                                numericInput("obj_pri_mob4","Objective 4 - Maintain or improve travel reliability for movement of goods and access to services", value=1, min=1, max=100)),
+                                                                numericInput("obj_pri_mob4","Objective 4 - Maintain or improve travel reliability for movement of goods and access to services", value=1, min=0, max=100)),
                                                                 column(width=5,
-                                                                       numericInput("pol_pri_FwyExtCongTTI_Metro","FwyExtCongTTI_Metro", value=1, min=1, max=100),
-                                                                       numericInput("pol_pri_ArtExtCongTTI_Metro","ArtExtCongTTI_Metro", value=1, min=1, max=100),
-                                                                       numericInput("pol_pri_ArtDvmtPropExtCong_SalemKeizer","ArtDvmtPropExtCong_SalemKeizer", value=1, min=1, max=100)
+                                                                       numericInput("pol_pri_FwyExtCongTTI_Metro","FwyExtCongTTI_Metro", value=1, min=0, max=100),
+                                                                       numericInput("pol_pri_ArtExtCongTTI_Metro","ArtExtCongTTI_Metro", value=1, min=0, max=100),
+                                                                       numericInput("pol_pri_ArtDvmtPropExtCong_SalemKeizer","ArtDvmtPropExtCong_SalemKeizer", value=1, min=0, max=100)
                                                                        )
                                                                 )
                                                    )
@@ -275,13 +277,21 @@ ui <- dashboardPage(skin="black",
                                                       )
                                             )
                                             )#, dataTableOutput("pol_weight_table")
+                                        ),
+                                        fluidRow(box(width=12, title="Scored Full Experiments", status = "danger",solidHeader = T,
+                                          dataTableOutput('un_sum_results'))
                                         )
                                         ),
                                         tabPanel("Documentation",
                                                  fluidRow(box(width=12,
                                                               fluidRow(
+                                                        h3(tags$b("Using the Prioritization Tool Feature")),
+                                                        h4("Explore the tool by entering in different weights for the different goals, objectives, and measures.  The prioritization tool feature is designed to optimally function with multiple goals, objectives, and measures weighted. For example, if the user adds a '0' weight for each of the goals, the results tab will simply reflect the top 'n' experiments and will not reflect any sort of ranked/scored information.")
+                                                              ),
+                                                              fluidRow(
                                                    h3(tags$b("Scoring Methodology")),
-                                                   h4("Score = (Measure Value1 * (Goal Weight * Objective Weight * Policy Weight)) + (Measure Value2 * (Goal Weight * Objective Weight * Policy Weight)) + (Measure Value3 * (Goal Weight * Objective Weight * Policy Weight)) ...")),
+                                                   h4("By default the tool weights all goals, objectives, equally; it is up to the user to change the numeric inputs from '1' to other numeric weights. The weighting system has several key design elements. Goals (e.g. Equity) are only weighted against other goals. For example, if all of the goals has a '1', then each goal of the five goals receives a 20% weight (1/5). Alternatively, if the user changes one goal weight to 10 and leaves the other goals at 1, the goal with the 9 will receive a 90% weight (9/10) while the others will have a 10% weight (1/10). Beneath goals, objectives are only weighted against other objectives within that goal and policy measures are only weighted against other measures within that objective. Scores are developed by applying these weights to a set of normalized measure values that come directly out of the TMIP-EMAT process. Measures, such as 'TotalCO2e', are normalized using percentiles against all other values of the measure and then added together - once the weights are applied - to create a total score. This total score represents the degree of desireability of given experiment considering the weighted priority that a user has provided and how those weights relate to estimated TMIP-EMAT experiment values. Once all of the experiments are scored, the top 'n' experiments are averaged and summary results of those 'top' experiments are shown in the results pane."),
+                                                   h4("Score = (Normalized Measure Value1 * (Goal Weight * Objective Weight * Policy Weight)) + (Normalized Measure Value2 * (Goal Weight * Objective Weight * Policy Weight)) + (Measure Value3 * (Goal Weight * Objective Weight * Policy Weight)) ...")),
                                                  fluidRow(
                                                    linebreaks(2),
                                                    h3(tags$b("Goals & Policies & Measures")),
@@ -289,14 +299,13 @@ ui <- dashboardPage(skin="black",
                                                  )
                                                  )
                                                  )
+                                        ), tabPanel("Experiments",
+                                                    fluidRow(
+                                                      box(width=12, title = "Results",
+                                                          dataTableOutput("results")
+                                                      )
+                                                    )
                                         )
-                                        )
-                                        ),
-                               tabPanel("Experiments",
-                                        fluidRow(
-                                          box(width=12, title = "Results",
-                                              dataTableOutput("results")
-                                              )
                                         )
                                         ),
                                tabPanel("Household Query",
@@ -330,6 +339,7 @@ ui <- dashboardPage(skin="black",
                                    column(2,valueBoxOutput("co2_1", width=12)),
                                    column(2,valueBoxOutput("bike_trips_1", width=12)),
                                    column(2,valueBoxOutput("walk_trips_1", width=12)),
+                                   column(2,valueBoxOutput("records111", width=12)),
                                   # column(2,valueBoxOutput("cost_per_income_1", width=12)),
                                    width=12)
                       ),
@@ -392,7 +402,7 @@ server <- function(input, output, session) {
     if(!is.null(input$upload_file)){
       results_new()
     } else{
-      read_csv("results.csv")
+      read_csv("27Sept_mm_2results.csv")
     }
   })
 results <- reactive({
@@ -590,6 +600,22 @@ results <- reactive({
         WalkPMTPerPrsnUrban < quantile(WalkPMTPerPrsnUrban, na.rm=T, .2000001, names=F) & WalkPMTPerPrsnUrban >= quantile(WalkPMTPerPrsnUrban, na.rm=T, .1333334, names=F) ~ 3, 
         WalkPMTPerPrsnUrban < quantile(WalkPMTPerPrsnUrban, na.rm=T, .1333334, names=F) & WalkPMTPerPrsnUrban >= quantile(WalkPMTPerPrsnUrban, na.rm=T, .0666667, names=F) ~ 2, 
         WalkPMTPerPrsnUrban < quantile(WalkPMTPerPrsnUrban, na.rm=T, .0666667, names=F) ~ 1),
+      `ElecDvmtProp_norm`=case_when(
+        ElecDvmtProp >= quantile(ElecDvmtProp, na.rm=T, 0.9333338, names=F) ~ 15, 
+        ElecDvmtProp < quantile(ElecDvmtProp, na.rm=T, .99333338, names=F) & ElecDvmtProp >= quantile(ElecDvmtProp, na.rm=T, .8666671, names=F) ~ 14, 
+        ElecDvmtProp < quantile(ElecDvmtProp, na.rm=T, .8666671, names=F) & ElecDvmtProp >= quantile(ElecDvmtProp, na.rm=T, .8000004, names=F) ~ 13,
+        ElecDvmtProp < quantile(ElecDvmtProp, na.rm=T, .8000004, names=F) & ElecDvmtProp >= quantile(ElecDvmtProp, na.rm=T, .7333337, names=F) ~ 12, 
+        ElecDvmtProp < quantile(ElecDvmtProp, na.rm=T, .7333337, names=F) & ElecDvmtProp>= quantile(ElecDvmtProp, na.rm=T, .666667, names=F) ~ 11,
+        ElecDvmtProp < quantile(ElecDvmtProp, na.rm=T, .666667, names=F) & ElecDvmtProp >= quantile(ElecDvmtProp, na.rm=T, .6000003, names=F) ~ 10, 
+        ElecDvmtProp < quantile(ElecDvmtProp, na.rm=T, .6000003, names=F) & ElecDvmtProp>= quantile(ElecDvmtProp, na.rm=T, .5333336, names=F) ~ 9,
+        ElecDvmtProp < quantile(ElecDvmtProp, na.rm=T, .5333336, names=F) & ElecDvmtProp >= quantile(ElecDvmtProp, na.rm=T, .4666669, names=F) ~ 8, 
+        ElecDvmtProp < quantile(ElecDvmtProp, na.rm=T, .4666669, names=F) & ElecDvmtProp >= quantile(ElecDvmtProp, na.rm=T, .4000002, names=F) ~ 7, 
+        ElecDvmtProp < quantile(ElecDvmtProp, na.rm=T, .4000002, names=F) & ElecDvmtProp >= quantile(ElecDvmtProp, na.rm=T, .3333335, names=F) ~ 6, 
+        ElecDvmtProp < quantile(ElecDvmtProp, na.rm=T, .3333335, names=F) & ElecDvmtProp >= quantile(ElecDvmtProp, na.rm=T, .2666668, names=F) ~ 5, 
+        ElecDvmtProp < quantile(ElecDvmtProp, na.rm=T, .2666668, names=F) & ElecDvmtProp >= quantile(ElecDvmtProp, na.rm=T, .2000001, names=F) ~ 4, 
+        ElecDvmtProp < quantile(ElecDvmtProp, na.rm=T, .2000001, names=F) & ElecDvmtProp >= quantile(ElecDvmtProp, na.rm=T, .1333334, names=F) ~ 3, 
+        ElecDvmtProp < quantile(ElecDvmtProp, na.rm=T, .1333334, names=F) & ElecDvmtProp >= quantile(ElecDvmtProp, na.rm=T, .0666667, names=F) ~ 2, 
+        ElecDvmtProp < quantile(ElecDvmtProp, na.rm=T, .0666667, names=F) ~ 1),
       `ArtDvmtPropExtCong_SalemKeizer_norm`=case_when(
         ArtDvmtPropExtCong_SalemKeizer >= quantile(ArtDvmtPropExtCong_SalemKeizer, na.rm=T, 0.9333338, names=F) ~ 1, 
         ArtDvmtPropExtCong_SalemKeizer < quantile(ArtDvmtPropExtCong_SalemKeizer, na.rm=T, .99333338, names=F) & ArtDvmtPropExtCong_SalemKeizer >= quantile(ArtDvmtPropExtCong_SalemKeizer, na.rm=T, .8666671, names=F) ~ 2, 
@@ -782,22 +808,22 @@ results <- reactive({
         BikeTripsPerCapita < quantile(BikeTripsPerCapita, na.rm=T, .2000001, names=F) & BikeTripsPerCapita >= quantile(BikeTripsPerCapita, na.rm=T, .1333334, names=F) ~ 3, 
         BikeTripsPerCapita < quantile(BikeTripsPerCapita, na.rm=T, .1333334, names=F) & BikeTripsPerCapita >= quantile(BikeTripsPerCapita, na.rm=T, .0666667, names=F) ~ 2, 
         BikeTripsPerCapita < quantile(BikeTripsPerCapita, na.rm=T, .0666667, names=F) ~ 1),
-      `PresAdapt$2022_norm`=case_when(
-        `PresAdapt$2022` >= quantile(`PresAdapt$2022`, na.rm=T, 0.9333338, names=F) ~ 15, 
-        `PresAdapt$2022` < quantile(`PresAdapt$2022`, na.rm=T, .99333338, names=F) & `PresAdapt$2022` >= quantile(`PresAdapt$2022`, na.rm=T, .8666671, names=F) ~ 14, 
-        `PresAdapt$2022` < quantile(`PresAdapt$2022`, na.rm=T, .8666671, names=F) & `PresAdapt$2022` >= quantile(`PresAdapt$2022`, na.rm=T, .8000004, names=F) ~ 13,
-        `PresAdapt$2022` < quantile(`PresAdapt$2022`, na.rm=T, .8000004, names=F) & `PresAdapt$2022` >= quantile(`PresAdapt$2022`, na.rm=T, .7333337, names=F) ~ 12, 
-        `PresAdapt$2022` < quantile(`PresAdapt$2022`, na.rm=T, .7333337, names=F) & `PresAdapt$2022`>= quantile(`PresAdapt$2022`, na.rm=T, .666667, names=F) ~ 11,
-        `PresAdapt$2022` < quantile(`PresAdapt$2022`, na.rm=T, .666667, names=F) & `PresAdapt$2022` >= quantile(`PresAdapt$2022`, na.rm=T, .6000003, names=F) ~ 10, 
-        `PresAdapt$2022` < quantile(`PresAdapt$2022`, na.rm=T, .6000003, names=F) & `PresAdapt$2022`>= quantile(`PresAdapt$2022`, na.rm=T, .5333336, names=F) ~ 9,
-        `PresAdapt$2022` < quantile(`PresAdapt$2022`, na.rm=T, .5333336, names=F) & `PresAdapt$2022` >= quantile(`PresAdapt$2022`, na.rm=T, .4666669, names=F) ~ 8, 
-        `PresAdapt$2022` < quantile(`PresAdapt$2022`, na.rm=T, .4666669, names=F) & `PresAdapt$2022` >= quantile(`PresAdapt$2022`, na.rm=T, .4000002, names=F) ~ 7, 
-        `PresAdapt$2022` < quantile(`PresAdapt$2022`, na.rm=T, .4000002, names=F) & `PresAdapt$2022` >= quantile(`PresAdapt$2022`, na.rm=T, .3333335, names=F) ~ 6, 
-        `PresAdapt$2022` < quantile(`PresAdapt$2022`, na.rm=T, .3333335, names=F) & `PresAdapt$2022` >= quantile(`PresAdapt$2022`, na.rm=T, .2666668, names=F) ~ 5, 
-        `PresAdapt$2022` < quantile(`PresAdapt$2022`, na.rm=T, .2666668, names=F) & `PresAdapt$2022` >= quantile(`PresAdapt$2022`, na.rm=T, .2000001, names=F) ~ 4, 
-        `PresAdapt$2022` < quantile(`PresAdapt$2022`, na.rm=T, .2000001, names=F) & `PresAdapt$2022` >= quantile(`PresAdapt$2022`, na.rm=T, .1333334, names=F) ~ 3, 
-        `PresAdapt$2022` < quantile(`PresAdapt$2022`, na.rm=T, .1333334, names=F) & `PresAdapt$2022` >= quantile(`PresAdapt$2022`, na.rm=T, .0666667, names=F) ~ 2, 
-        `PresAdapt$2022` < quantile(`PresAdapt$2022`, na.rm=T, .0666667, names=F) ~ 1)
+      `PresAdaptBudget_norm`=case_when(
+        `PresAdaptBudget` >= quantile(`PresAdaptBudget`, na.rm=T, 0.9333338, names=F) ~ 15, 
+        `PresAdaptBudget` < quantile(`PresAdaptBudget`, na.rm=T, .99333338, names=F) & `PresAdaptBudget` >= quantile(`PresAdaptBudget`, na.rm=T, .8666671, names=F) ~ 14, 
+        `PresAdaptBudget` < quantile(`PresAdaptBudget`, na.rm=T, .8666671, names=F) & `PresAdaptBudget` >= quantile(`PresAdaptBudget`, na.rm=T, .8000004, names=F) ~ 13,
+        `PresAdaptBudget` < quantile(`PresAdaptBudget`, na.rm=T, .8000004, names=F) & `PresAdaptBudget` >= quantile(`PresAdaptBudget`, na.rm=T, .7333337, names=F) ~ 12, 
+        `PresAdaptBudget` < quantile(`PresAdaptBudget`, na.rm=T, .7333337, names=F) & `PresAdaptBudget`>= quantile(`PresAdaptBudget`, na.rm=T, .666667, names=F) ~ 11,
+        `PresAdaptBudget` < quantile(`PresAdaptBudget`, na.rm=T, .666667, names=F) & `PresAdaptBudget` >= quantile(`PresAdaptBudget`, na.rm=T, .6000003, names=F) ~ 10, 
+        `PresAdaptBudget` < quantile(`PresAdaptBudget`, na.rm=T, .6000003, names=F) & `PresAdaptBudget`>= quantile(`PresAdaptBudget`, na.rm=T, .5333336, names=F) ~ 9,
+        `PresAdaptBudget` < quantile(`PresAdaptBudget`, na.rm=T, .5333336, names=F) & `PresAdaptBudget` >= quantile(`PresAdaptBudget`, na.rm=T, .4666669, names=F) ~ 8, 
+        `PresAdaptBudget` < quantile(`PresAdaptBudget`, na.rm=T, .4666669, names=F) & `PresAdaptBudget` >= quantile(`PresAdaptBudget`, na.rm=T, .4000002, names=F) ~ 7, 
+        `PresAdaptBudget` < quantile(`PresAdaptBudget`, na.rm=T, .4000002, names=F) & `PresAdaptBudget` >= quantile(`PresAdaptBudget`, na.rm=T, .3333335, names=F) ~ 6, 
+        `PresAdaptBudget` < quantile(`PresAdaptBudget`, na.rm=T, .3333335, names=F) & `PresAdaptBudget` >= quantile(`PresAdaptBudget`, na.rm=T, .2666668, names=F) ~ 5, 
+        `PresAdaptBudget` < quantile(`PresAdaptBudget`, na.rm=T, .2666668, names=F) & `PresAdaptBudget` >= quantile(`PresAdaptBudget`, na.rm=T, .2000001, names=F) ~ 4, 
+        `PresAdaptBudget` < quantile(`PresAdaptBudget`, na.rm=T, .2000001, names=F) & `PresAdaptBudget` >= quantile(`PresAdaptBudget`, na.rm=T, .1333334, names=F) ~ 3, 
+        `PresAdaptBudget` < quantile(`PresAdaptBudget`, na.rm=T, .1333334, names=F) & `PresAdaptBudget` >= quantile(`PresAdaptBudget`, na.rm=T, .0666667, names=F) ~ 2, 
+        `PresAdaptBudget` < quantile(`PresAdaptBudget`, na.rm=T, .0666667, names=F) ~ 1)
     )
 })
   results_new <- reactive({
@@ -828,6 +854,9 @@ sus_obj_weighting <- reactive({
   data.frame(weighting=c(input$obj_pri_sust1,input$obj_pri_sust2),
              obj=c("sus1","sus2")
   ) %>% mutate(total=sum(weighting), norm=weighting/total)
+})
+output$sus_obj_weighting<- renderDataTable({
+  datatable(sus_obj_weighting())
 })
 mob_obj_weighting <- reactive({
   data.frame(weighting=c(input$obj_pri_mob1,input$obj_pri_mob2,input$obj_pri_mob4),
@@ -861,11 +890,18 @@ sus1_pol_weighting <- reactive({
                          input$pol_pri_HouseholdCO2ePerMileRural),
              policy=c("Sus11","Sus12","Sus13")) %>% mutate(total=sum(weighting), norm=weighting/total)
 })
+output$sus1_pol_weighting <-renderDataTable({
+  datatable(sus1_pol_weighting())
+})
 sus2_pol_weighting <- reactive({
   data.frame(weighting=c(
                          input$pol_pri_BusCO2eRate_Metro,
-                         input$pol_pri_HvyTrkAveUrbanCO2eRate_Metro),
-             policy=c("Sus21","Sus22")) %>% mutate(total=sum(weighting), norm=weighting/total)
+                         input$pol_pri_HvyTrkAveUrbanCO2eRate_Metro,
+                         input$pol_pri_ElecDvmtProp),
+             policy=c("Sus21","Sus22","Sus23")) %>% mutate(total=sum(weighting), norm=weighting/total)
+})
+output$sus2_pol_weighting <-renderDataTable({
+  datatable(sus2_pol_weighting())
 })
 mob1_pol_weighting <- reactive({
   data.frame(weighting=c(
@@ -895,106 +931,434 @@ output$pol_weight_table<-renderDataTable({
   datatable(pol_weighting())
 })
 sum_results <- reactive({
-  results() %>% mutate(
-    score= 
+  if(input$goal_pri_sust == 0 & input$goal_pri_mob == 0 & input$goal_pri_equity==0 & input$goal_pri_safety==0 & input$goal_pri_stew ==1){
+    results()  %>% mutate(
+      CARSVCAVAILSCEN=case_when(
+        CARSVCAVAILSCEN =="low" ~ 1,
+        CARSVCAVAILSCEN =="mid" ~ 2,
+        CARSVCAVAILSCEN =="high" ~ 3
+      ),
+      POWERTRAINSCEN=case_when(
+        POWERTRAINSCEN =="LOWEV" ~ 1,
+        POWERTRAINSCEN =="MEDHH" ~ 2
+      ),
+      score= rowSums(
+        cbind(
+          (OwnCostPropHhLess25K_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
+                                          eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
+                                          eq_pol_weighting() %>% filter(policy=="Eq11") %>% pull(norm))),
+          (OwnCostProp_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
+                                 eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
+                                 eq_pol_weighting() %>% filter(policy=="Eq12") %>% pull(norm))),
+          (OwnCostPropHh25Kto50K_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
+                                           eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
+                                           eq_pol_weighting() %>% filter(policy=="Eq13") %>% pull(norm))),
+          (BikePMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                         mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                         mob1_pol_weighting() %>% filter(policy=="Mob11") %>% pull(norm))),
+          (WalkPMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                         mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                         mob1_pol_weighting() %>% filter(policy=="Mob12") %>% pull(norm))),
+          (TransitTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                           mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                           mob1_pol_weighting() %>% filter(policy=="Mob13") %>% pull(norm))),
+          (TransitPMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                            mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                            mob1_pol_weighting() %>% filter(policy=="Mob14") %>% pull(norm))),
+          (BikeTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                        mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                        mob1_pol_weighting() %>% filter(policy=="Mob15") %>% pull(norm))),
+          (WalkTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                        mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                        mob1_pol_weighting() %>% filter(policy=="Mob17") %>% pull(norm))),
+          (HouseholdDvmtPerPrsn_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                          mob_obj_weighting() %>% filter(obj=="mob2") %>% pull(norm) * 
+                                          mob2_pol_weighting() %>% filter(policy=="Mob21") %>% pull(norm))),
+          (TotalDvmtPerPrsn_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                      mob_obj_weighting() %>% filter(obj=="mob2") %>% pull(norm) * 
+                                      mob2_pol_weighting() %>% filter(policy=="Mob22") %>% pull(norm))) + 
+            (ArtDvmtPropExtCong_SalemKeizer_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                                      mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
+                                                      mob3_pol_weighting() %>% filter(policy=="Mob41") %>% pull(norm))),
+          (FwyExtCongTTI_Metro_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                         mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
+                                         mob3_pol_weighting() %>% filter(policy=="Mob42") %>% pull(norm))), 
+          (ArtExtCongTTI_Metro_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                         mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
+                                         mob3_pol_weighting() %>% filter(policy=="Mob43") %>% pull(norm))) ,
+          (AutoFatalCrash_Metro_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+                                          sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+                                          sfty_pol_weighting() %>% filter(policy=="Sfty11") %>% pull(norm))) , 
+          (AutoFatalUrban_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+                                    sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+                                    sfty_pol_weighting() %>% filter(policy=="Sfty12") %>% pull(norm))) ,
+          (AutoInjuryUrban_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+                                     sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+                                     sfty_pol_weighting() %>% filter(policy=="Sfty13") %>% pull(norm))) ,
+          (AutoFatalRural_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+                                    sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+                                    sfty_pol_weighting() %>% filter(policy=="Sfty14") %>% pull(norm))) , 
+          (TotalCO2e_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                               sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
+                               sus1_pol_weighting() %>% filter(policy=="Sus11") %>% pull(norm))) ,
+          (HouseholdCO2ePerPrsn_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                          sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
+                                          sus1_pol_weighting() %>% filter(policy=="Sus12") %>% pull(norm))) , 
+          (HouseholdCO2ePerMileRural_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                               sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
+                                               sus1_pol_weighting() %>% filter(policy=="Sus13") %>% pull(norm))),
+          (BusCO2eRate_Metro_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                       sus_obj_weighting() %>% filter(obj=="sus2") %>% pull(norm) * 
+                                       sus2_pol_weighting() %>% filter(policy=="Sus21") %>% pull(norm))) ,
+          (HvyTrkAveUrbanCO2eRate_Metro_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                                  sus_obj_weighting() %>% filter(obj=="sus2") %>% pull(norm) * 
+                                                  sus2_pol_weighting() %>% filter(policy=="Sus22") %>% pull(norm))),
+          (`PresAdaptBudget_norm` * (goal_weighting() %>% filter(goal=="stew") %>% pull(norm) * 
+                                       pres_obj_weighting() %>% filter(obj=="goal") %>% pull(norm) * 
+                                       pres_pol_weighting() %>% filter(policy=="Goal") %>% pull(norm))),
+          (ElecDvmtProp_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                                  sus_obj_weighting() %>% filter(obj=="sus2") %>% pull(norm) * 
+                                                  sus2_pol_weighting() %>% filter(policy=="Sus23") %>% pull(norm)))
+        ))
+    ) %>%
+      arrange(desc(score), desc(PresAdaptBudget)) %>% 
+      slice(1:input$no_exp) %>%
+      summarise(CARCHARGEAVAILSCEN=mean(CARCHARGEAVAILSCEN,na.rm=T),
+                INTDENSITYSCEN=mean(INTDENSITYSCEN,na.rm=T),
+                LANEMILESCEN=mean(LANEMILESCEN,na.rm=T),
+                CARSVCAVAILSCEN=mean(CARSVCAVAILSCEN,na.rm=T),
+                POWERTRAINSCEN=mean(POWERTRAINSCEN, na.rm=T),
+                TRANSITSCEN=mean(TRANSITSCEN,na.rm=T),
+                LUDENSITYMIX=mean(LUDENSITYMIX,na.rm=T),
+                OPSDEPLOYSCEN=mean(OPSDEPLOYSCEN,na.rm=T),
+                SHDCARSVCOCCUPRATE=mean(SHDCARSVCOCCUPRATE,na.rm=T),
+                SOVDIVIVERTSCEN=mean(SOVDIVIVERTSCEN,na.rm=T),
+                VehOwnTax=mean(VehOwnTax,na.rm=T),
+                TAXSCEN=mean(TAXSCEN,na.rm=T),
+                TotalFuelTax=mean(TotalFuelTax,na.rm=T),
+                PerMileCharge  =mean(PerMileCharge ,na.rm=T),
+                TDMINVESTMENTSCEN=mean(TDMINVESTMENTSCEN,na.rm=T),
+                TRANSITSERVICESCEN=mean(TRANSITSERVICESCEN,na.rm=T),
+                TotalBudget=mean(TotalBudget,na.rm=T),
+                PresAdaptBudget=mean(PresAdaptBudget,na.rm=T),
+                FwyExtCongTTI_Metro=mean(FwyExtCongTTI_Metro,na.rm=T),
+                ArtExtCongTTI_Metro=mean(ArtExtCongTTI_Metro,na.rm=T),
+                LdvAveSpeed_Metro=mean(LdvAveSpeed_Metro,na.rm=T),
+                OwnCostPropHhLess25K=mean(OwnCostPropHhLess25K,na.rm=T),
+                AutoFatalUrban=mean(AutoFatalUrban,na.rm=T)
+      ) %>%
+      pivot_longer(cols=everything()) %>%
+      mutate(value=comma(round(value,3)))   
+  }else{
+  results()  %>% mutate(
+    CARSVCAVAILSCEN=case_when(
+      CARSVCAVAILSCEN =="low" ~ 1,
+      CARSVCAVAILSCEN =="mid" ~ 2,
+      CARSVCAVAILSCEN =="high" ~ 3
+    ),
+    POWERTRAINSCEN=case_when(
+      POWERTRAINSCEN =="LOWEV" ~ 1,
+      POWERTRAINSCEN =="MEDHH" ~ 2
+    ),
+    score= rowSums(
+      cbind(
       (OwnCostPropHhLess25K_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
                                       eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
-                                      eq_pol_weighting() %>% filter(policy=="Eq11") %>% pull(norm))) +
+                                      eq_pol_weighting() %>% filter(policy=="Eq11") %>% pull(norm))),
       (OwnCostProp_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
                              eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
-                             eq_pol_weighting() %>% filter(policy=="Eq12") %>% pull(norm)))+
+                             eq_pol_weighting() %>% filter(policy=="Eq12") %>% pull(norm))),
       (OwnCostPropHh25Kto50K_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
                                        eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
-                               eq_pol_weighting() %>% filter(policy=="Eq13") %>% pull(norm)))+
+                               eq_pol_weighting() %>% filter(policy=="Eq13") %>% pull(norm))),
       (BikePMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
                                        mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
-                                     mob1_pol_weighting() %>% filter(policy=="Mob11") %>% pull(norm)))+
+                                     mob1_pol_weighting() %>% filter(policy=="Mob11") %>% pull(norm))),
       (WalkPMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
                                      mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
-                                     mob1_pol_weighting() %>% filter(policy=="Mob12") %>% pull(norm)))+
+                                     mob1_pol_weighting() %>% filter(policy=="Mob12") %>% pull(norm))),
       (TransitTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
                                        mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
-                                       mob1_pol_weighting() %>% filter(policy=="Mob13") %>% pull(norm)))+
+                                       mob1_pol_weighting() %>% filter(policy=="Mob13") %>% pull(norm))),
       (TransitPMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
                                         mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
-                                        mob1_pol_weighting() %>% filter(policy=="Mob14") %>% pull(norm)))+
+                                        mob1_pol_weighting() %>% filter(policy=="Mob14") %>% pull(norm))),
       (BikeTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
                                     mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
-                                    mob1_pol_weighting() %>% filter(policy=="Mob15") %>% pull(norm)))+
+                                    mob1_pol_weighting() %>% filter(policy=="Mob15") %>% pull(norm))),
       (WalkTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
                                     mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
-                                    mob1_pol_weighting() %>% filter(policy=="Mob17") %>% pull(norm)))+
+                                    mob1_pol_weighting() %>% filter(policy=="Mob17") %>% pull(norm))),
       (HouseholdDvmtPerPrsn_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
                                       mob_obj_weighting() %>% filter(obj=="mob2") %>% pull(norm) * 
-                                      mob2_pol_weighting() %>% filter(policy=="Mob21") %>% pull(norm))) + 
+                                      mob2_pol_weighting() %>% filter(policy=="Mob21") %>% pull(norm))),
       (TotalDvmtPerPrsn_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
                                   mob_obj_weighting() %>% filter(obj=="mob2") %>% pull(norm) * 
                                   mob2_pol_weighting() %>% filter(policy=="Mob22") %>% pull(norm))) + 
       (ArtDvmtPropExtCong_SalemKeizer_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
                                                 mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
-                                                mob3_pol_weighting() %>% filter(policy=="Mob41") %>% pull(norm))) + 
+                                                mob3_pol_weighting() %>% filter(policy=="Mob41") %>% pull(norm))),
       (FwyExtCongTTI_Metro_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
                                      mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
-                                     mob3_pol_weighting() %>% filter(policy=="Mob42") %>% pull(norm))) + 
+                                     mob3_pol_weighting() %>% filter(policy=="Mob42") %>% pull(norm))), 
       (ArtExtCongTTI_Metro_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
                                      mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
-                                     mob3_pol_weighting() %>% filter(policy=="Mob43") %>% pull(norm))) +
+                                     mob3_pol_weighting() %>% filter(policy=="Mob43") %>% pull(norm))) ,
       (AutoFatalCrash_Metro_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
                                       sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
-                                      sfty_pol_weighting() %>% filter(policy=="Sfty11") %>% pull(norm))) + 
+                                      sfty_pol_weighting() %>% filter(policy=="Sfty11") %>% pull(norm))) , 
       (AutoFatalUrban_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
                                 sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
-                                sfty_pol_weighting() %>% filter(policy=="Sfty12") %>% pull(norm))) + 
+                                sfty_pol_weighting() %>% filter(policy=="Sfty12") %>% pull(norm))) ,
       (AutoInjuryUrban_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
                                  sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
-                                 sfty_pol_weighting() %>% filter(policy=="Sfty13") %>% pull(norm))) + 
+                                 sfty_pol_weighting() %>% filter(policy=="Sfty13") %>% pull(norm))) ,
       (AutoFatalRural_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
                                 sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
-                                sfty_pol_weighting() %>% filter(policy=="Sfty14") %>% pull(norm))) + 
+                                sfty_pol_weighting() %>% filter(policy=="Sfty14") %>% pull(norm))) , 
        (TotalCO2e_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
                             sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
-                            sus1_pol_weighting() %>% filter(policy=="Sus11") %>% pull(norm))) + 
+                            sus1_pol_weighting() %>% filter(policy=="Sus11") %>% pull(norm))) ,
       (HouseholdCO2ePerPrsn_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
                                       sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
-                                      sus1_pol_weighting() %>% filter(policy=="Sus12") %>% pull(norm))) + 
+                                      sus1_pol_weighting() %>% filter(policy=="Sus12") %>% pull(norm))) , 
       (HouseholdCO2ePerMileRural_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
                                            sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
-                                           sus1_pol_weighting() %>% filter(policy=="Sus13") %>% pull(norm))) +
+                                           sus1_pol_weighting() %>% filter(policy=="Sus13") %>% pull(norm))),
       (BusCO2eRate_Metro_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
                                    sus_obj_weighting() %>% filter(obj=="sus2") %>% pull(norm) * 
-                                   sus2_pol_weighting() %>% filter(policy=="Sus21") %>% pull(norm))) +
+                                   sus2_pol_weighting() %>% filter(policy=="Sus21") %>% pull(norm))) ,
       (HvyTrkAveUrbanCO2eRate_Metro_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
                                               sus_obj_weighting() %>% filter(obj=="sus2") %>% pull(norm) * 
-                                              sus2_pol_weighting() %>% filter(policy=="Sus22") %>% pull(norm)))+
-      (`PresAdapt$2022_norm` * (goal_weighting() %>% filter(goal=="stew") %>% pull(norm) * 
+                                              sus2_pol_weighting() %>% filter(policy=="Sus22") %>% pull(norm))),
+      (`PresAdaptBudget_norm` * (goal_weighting() %>% filter(goal=="stew") %>% pull(norm) * 
                                   pres_obj_weighting() %>% filter(obj=="goal") %>% pull(norm) * 
-                                  pres_pol_weighting() %>% filter(policy=="Goal") %>% pull(norm)))
+                                  pres_pol_weighting() %>% filter(policy=="Goal") %>% pull(norm))),
+      (ElecDvmtProp_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                              sus_obj_weighting() %>% filter(obj=="sus2") %>% pull(norm) * 
+                              sus2_pol_weighting() %>% filter(policy=="Sus23") %>% pull(norm)))
+      ))
      ) %>%
     arrange(desc(score)) %>% 
     slice(1:input$no_exp) %>%
-    summarise(CARCHARGEAVAILSCEN=mean(CARCHARGEAVAILSCEN,na.rm=T),
-              INTDENSITYSCEN=mean(INTDENSITYSCEN,na.rm=T),
-              LANEMILESCEN=mean(LANEMILESCEN,na.rm=T),
-              LUDENSITYMIX=mean(LUDENSITYMIX,na.rm=T),
-              OPSDEPLOYSCEN=mean(OPSDEPLOYSCEN,na.rm=T),
-              SHDCARSVCOCCUPRATE=mean(SHDCARSVCOCCUPRATE,na.rm=T),
-              SOVDIVIVERTSCEN=mean(SOVDIVIVERTSCEN,na.rm=T),
-              VehOwnTax=mean(VehOwnTax,na.rm=T),
-              TAXSCEN=mean(TAXSCEN,na.rm=T),
-              `Per Mile Charge$2022`=mean(`Per Mile Charge$2022`,na.rm=T),
-              TDMINVESTMENTSCEN=mean(TDMINVESTMENTSCEN,na.rm=T),
-              TRANSITSERVICESCEN=mean(TRANSITSERVICESCEN,na.rm=T),
-              `Total Budget$2022`=mean(`Total Budget$2022`,na.rm=T),
-              `PresAdapt$2022`=mean(`PresAdapt$2022`,na.rm=T),
-              FwyExtCongTTI_Metro=mean(FwyExtCongTTI_Metro,na.rm=T),
-              ArtExtCongTTI_Metro=mean(ArtExtCongTTI_Metro,na.rm=T),
-              LdvAveSpeed_Metro=mean(LdvAveSpeed_Metro,na.rm=T),
-              OwnCostPropHhLess25K=mean(OwnCostPropHhLess25K,na.rm=T),
-              AutoFatalUrban=mean(AutoFatalUrban,na.rm=T)
+      summarise(CARCHARGEAVAILSCEN=mean(CARCHARGEAVAILSCEN,na.rm=T),
+                INTDENSITYSCEN=mean(INTDENSITYSCEN,na.rm=T),
+                LANEMILESCEN=mean(LANEMILESCEN,na.rm=T),
+                CARSVCAVAILSCEN=mean(CARSVCAVAILSCEN,na.rm=T),
+                POWERTRAINSCEN=mean(POWERTRAINSCEN, na.rm=T),
+                TRANSITSCEN=mean(TRANSITSCEN,na.rm=T),
+                LUDENSITYMIX=mean(LUDENSITYMIX,na.rm=T),
+                OPSDEPLOYSCEN=mean(OPSDEPLOYSCEN,na.rm=T),
+                SHDCARSVCOCCUPRATE=mean(SHDCARSVCOCCUPRATE,na.rm=T),
+                SOVDIVIVERTSCEN=mean(SOVDIVIVERTSCEN,na.rm=T),
+                VehOwnTax=mean(VehOwnTax,na.rm=T),
+                TAXSCEN=mean(TAXSCEN,na.rm=T),
+                TotalFuelTax=mean(TotalFuelTax,na.rm=T),
+                PerMileCharge  =mean(PerMileCharge ,na.rm=T),
+                TDMINVESTMENTSCEN=mean(TDMINVESTMENTSCEN,na.rm=T),
+                TRANSITSERVICESCEN=mean(TRANSITSERVICESCEN,na.rm=T),
+                TotalBudget=mean(TotalBudget,na.rm=T),
+                PresAdaptBudget=mean(PresAdaptBudget,na.rm=T),
+                FwyExtCongTTI_Metro=mean(FwyExtCongTTI_Metro,na.rm=T),
+                ArtExtCongTTI_Metro=mean(ArtExtCongTTI_Metro,na.rm=T),
+                LdvAveSpeed_Metro=mean(LdvAveSpeed_Metro,na.rm=T),
+                OwnCostPropHhLess25K=mean(OwnCostPropHhLess25K,na.rm=T),
+                AutoFatalUrban=mean(AutoFatalUrban,na.rm=T)
               ) %>%
     pivot_longer(cols=everything()) %>%
     mutate(value=comma(round(value,3)))
+}
 })
+output$goal_weighting <- renderDataTable({
+  datatable(goal_weighting())
+})
+un_sum_results <- reactive({
+  if(input$goal_pri_sust == 0 & input$goal_pri_mob == 0 & input$goal_pri_equity==0 & input$goal_pri_safety==0 & input$goal_pri_stew ==1){
+    results()  %>% mutate(
+      score= rowSums(
+        cbind(
+          (OwnCostPropHhLess25K_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
+                                          eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
+                                          eq_pol_weighting() %>% filter(policy=="Eq11") %>% pull(norm))),
+          (OwnCostProp_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
+                                 eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
+                                 eq_pol_weighting() %>% filter(policy=="Eq12") %>% pull(norm))),
+          (OwnCostPropHh25Kto50K_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
+                                           eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
+                                           eq_pol_weighting() %>% filter(policy=="Eq13") %>% pull(norm))),
+          (BikePMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                         mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                         mob1_pol_weighting() %>% filter(policy=="Mob11") %>% pull(norm))),
+          (WalkPMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                         mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                         mob1_pol_weighting() %>% filter(policy=="Mob12") %>% pull(norm))),
+          (TransitTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                           mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                           mob1_pol_weighting() %>% filter(policy=="Mob13") %>% pull(norm))),
+          (TransitPMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                            mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                            mob1_pol_weighting() %>% filter(policy=="Mob14") %>% pull(norm))),
+          (BikeTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                        mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                        mob1_pol_weighting() %>% filter(policy=="Mob15") %>% pull(norm))),
+          (WalkTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                        mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                        mob1_pol_weighting() %>% filter(policy=="Mob17") %>% pull(norm))),
+          (HouseholdDvmtPerPrsn_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                          mob_obj_weighting() %>% filter(obj=="mob2") %>% pull(norm) * 
+                                          mob2_pol_weighting() %>% filter(policy=="Mob21") %>% pull(norm))),
+          (TotalDvmtPerPrsn_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                      mob_obj_weighting() %>% filter(obj=="mob2") %>% pull(norm) * 
+                                      mob2_pol_weighting() %>% filter(policy=="Mob22") %>% pull(norm))) + 
+            (ArtDvmtPropExtCong_SalemKeizer_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                                      mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
+                                                      mob3_pol_weighting() %>% filter(policy=="Mob41") %>% pull(norm))),
+          (FwyExtCongTTI_Metro_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                         mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
+                                         mob3_pol_weighting() %>% filter(policy=="Mob42") %>% pull(norm))), 
+          (ArtExtCongTTI_Metro_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                         mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
+                                         mob3_pol_weighting() %>% filter(policy=="Mob43") %>% pull(norm))) ,
+          (AutoFatalCrash_Metro_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+                                          sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+                                          sfty_pol_weighting() %>% filter(policy=="Sfty11") %>% pull(norm))) , 
+          (AutoFatalUrban_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+                                    sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+                                    sfty_pol_weighting() %>% filter(policy=="Sfty12") %>% pull(norm))) ,
+          (AutoInjuryUrban_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+                                     sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+                                     sfty_pol_weighting() %>% filter(policy=="Sfty13") %>% pull(norm))) ,
+          (AutoFatalRural_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+                                    sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+                                    sfty_pol_weighting() %>% filter(policy=="Sfty14") %>% pull(norm))) , 
+          (TotalCO2e_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                               sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
+                               sus1_pol_weighting() %>% filter(policy=="Sus11") %>% pull(norm))) ,
+          (HouseholdCO2ePerPrsn_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                          sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
+                                          sus1_pol_weighting() %>% filter(policy=="Sus12") %>% pull(norm))) , 
+          (HouseholdCO2ePerMileRural_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                               sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
+                                               sus1_pol_weighting() %>% filter(policy=="Sus13") %>% pull(norm))),
+          (BusCO2eRate_Metro_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                       sus_obj_weighting() %>% filter(obj=="sus2") %>% pull(norm) * 
+                                       sus2_pol_weighting() %>% filter(policy=="Sus21") %>% pull(norm))) ,
+          (HvyTrkAveUrbanCO2eRate_Metro_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                                  sus_obj_weighting() %>% filter(obj=="sus2") %>% pull(norm) * 
+                                                  sus2_pol_weighting() %>% filter(policy=="Sus22") %>% pull(norm))),
+          (`PresAdaptBudget_norm` * (goal_weighting() %>% filter(goal=="stew") %>% pull(norm) * 
+                                       pres_obj_weighting() %>% filter(obj=="goal") %>% pull(norm) * 
+                                       pres_pol_weighting() %>% filter(policy=="Goal") %>% pull(norm))),
+          (ElecDvmtProp_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                  sus_obj_weighting() %>% filter(obj=="sus2") %>% pull(norm) * 
+                                  sus2_pol_weighting() %>% filter(policy=="Sus23") %>% pull(norm)))
+        ))
+    ) %>%
+      arrange(desc(score), desc(PresAdaptBudget)) %>%
+      mutate(score=round(score,2))
+  }else{
+    results()  %>% mutate(
+      score= rowSums(
+        cbind(
+          (OwnCostPropHhLess25K_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
+                                          eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
+                                          eq_pol_weighting() %>% filter(policy=="Eq11") %>% pull(norm))),
+          (OwnCostProp_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
+                                 eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
+                                 eq_pol_weighting() %>% filter(policy=="Eq12") %>% pull(norm))),
+          (OwnCostPropHh25Kto50K_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
+                                           eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
+                                           eq_pol_weighting() %>% filter(policy=="Eq13") %>% pull(norm))),
+          (BikePMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                         mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                         mob1_pol_weighting() %>% filter(policy=="Mob11") %>% pull(norm))),
+          (WalkPMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                         mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                         mob1_pol_weighting() %>% filter(policy=="Mob12") %>% pull(norm))),
+          (TransitTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                           mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                           mob1_pol_weighting() %>% filter(policy=="Mob13") %>% pull(norm))),
+          (TransitPMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                            mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                            mob1_pol_weighting() %>% filter(policy=="Mob14") %>% pull(norm))),
+          (BikeTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                        mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                        mob1_pol_weighting() %>% filter(policy=="Mob15") %>% pull(norm))),
+          (WalkTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                        mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+                                        mob1_pol_weighting() %>% filter(policy=="Mob17") %>% pull(norm))),
+          (HouseholdDvmtPerPrsn_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                          mob_obj_weighting() %>% filter(obj=="mob2") %>% pull(norm) * 
+                                          mob2_pol_weighting() %>% filter(policy=="Mob21") %>% pull(norm))),
+          (TotalDvmtPerPrsn_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                      mob_obj_weighting() %>% filter(obj=="mob2") %>% pull(norm) * 
+                                      mob2_pol_weighting() %>% filter(policy=="Mob22") %>% pull(norm))) + 
+            (ArtDvmtPropExtCong_SalemKeizer_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                                      mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
+                                                      mob3_pol_weighting() %>% filter(policy=="Mob41") %>% pull(norm))),
+          (FwyExtCongTTI_Metro_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                         mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
+                                         mob3_pol_weighting() %>% filter(policy=="Mob42") %>% pull(norm))), 
+          (ArtExtCongTTI_Metro_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+                                         mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
+                                         mob3_pol_weighting() %>% filter(policy=="Mob43") %>% pull(norm))) ,
+          (AutoFatalCrash_Metro_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+                                          sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+                                          sfty_pol_weighting() %>% filter(policy=="Sfty11") %>% pull(norm))) , 
+          (AutoFatalUrban_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+                                    sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+                                    sfty_pol_weighting() %>% filter(policy=="Sfty12") %>% pull(norm))) ,
+          (AutoInjuryUrban_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+                                     sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+                                     sfty_pol_weighting() %>% filter(policy=="Sfty13") %>% pull(norm))) ,
+          (AutoFatalRural_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+                                    sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+                                    sfty_pol_weighting() %>% filter(policy=="Sfty14") %>% pull(norm))) , 
+          (TotalCO2e_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                               sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
+                               sus1_pol_weighting() %>% filter(policy=="Sus11") %>% pull(norm))) ,
+          (HouseholdCO2ePerPrsn_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                          sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
+                                          sus1_pol_weighting() %>% filter(policy=="Sus12") %>% pull(norm))) , 
+          (HouseholdCO2ePerMileRural_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                               sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
+                                               sus1_pol_weighting() %>% filter(policy=="Sus13") %>% pull(norm))),
+          (BusCO2eRate_Metro_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                       sus_obj_weighting() %>% filter(obj=="sus2") %>% pull(norm) * 
+                                       sus2_pol_weighting() %>% filter(policy=="Sus21") %>% pull(norm))) ,
+          (HvyTrkAveUrbanCO2eRate_Metro_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                                  sus_obj_weighting() %>% filter(obj=="sus2") %>% pull(norm) * 
+                                                  sus2_pol_weighting() %>% filter(policy=="Sus22") %>% pull(norm))),
+          (`PresAdaptBudget_norm` * (goal_weighting() %>% filter(goal=="stew") %>% pull(norm) * 
+                                       pres_obj_weighting() %>% filter(obj=="goal") %>% pull(norm) * 
+                                       pres_pol_weighting() %>% filter(policy=="Goal") %>% pull(norm))),
+          (ElecDvmtProp_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                  sus_obj_weighting() %>% filter(obj=="sus2") %>% pull(norm) * 
+                                  sus2_pol_weighting() %>% filter(policy=="Sus23") %>% pull(norm)))
+        ))
+    ) %>%
+      arrange(desc(score)) %>%
+      mutate(score=round(score,2))
+  }
+})
+test_results <- reactive({
+  results() %>% mutate(
+    score= 
+      (TotalCO2e_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                           sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
+                           sus1_pol_weighting() %>% filter(policy=="Sus11") %>% pull(norm))) + 
+      (HouseholdCO2ePerPrsn_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+                                      sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
+                                      sus1_pol_weighting() %>% filter(policy=="Sus12") %>% pull(norm))) + 
+      (HouseholdCO2ePerMileRural_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) ))
+  ) %>% pull(score)
+})
+output$test<-renderText({
+  test_results()
+})
+output$un_sum_results<-renderDataTable({
+  datatable(un_sum_results(), rownames = F,options = list(pageLength = 10,scrollX = TRUE))
+}) 
 output$sum_results<-renderDataTable({
   datatable(sum_results(), rownames = F,options = list(pageLength = 20, dom="t"))
 })  
@@ -1002,7 +1366,7 @@ output$results  <-renderDataTable({
     datatable(results(), rownames = F,options = list(pageLength = 30,scrollX = TRUE))
   })
 output$summary  <-renderDataTable({
-  datatable(summary, rownames = F,options = list(pageLength = 30))
+  datatable(summary, rownames = F,options = list(pageLength = 10))
 })
   base_values <- reactive({
     hh1_group %>% filter(Azone %in%input$input_azone & 
@@ -1022,6 +1386,18 @@ output$summary  <-renderDataTable({
                                                                           BikeTripsPerCapita=round(mean(BikeTripsPerCapita, na.rm=T),2),
                                                                           WalkTripsPerCapita=round(mean(WalkTripsPerCapita, na.rm=T),2),
                                                                           cost_per_income=mean(cost_per_income, na.rm=T))
+  })
+  output$records111 <-renderValueBox({
+    valueBox(comma(hh1_group %>% filter(Azone %in%input$input_azone & 
+                                          region %in%input$input_region & 
+                                          # HhSize %in%input$input_hh & 
+                                          odot_comp %in%input$input_lifecycle & 
+                                          income_cat %in%input$input_income & 
+                                          workers1 %in%input$input_workers & 
+                                          HouseType %in%input$input_house_type &
+                                          LocType %in%input$input_loc_type &
+                                          car_sufficiency %in%input$input_car_sufficiency) %>%
+                     summarise(households=sum(households,na.rm=T)) %>% pull()), "Number of HH Selected", width=12, color="navy")
   })
   # scenario 1
   output$DvmtPerCapita_1 <-renderValueBox({
@@ -1502,4 +1878,79 @@ shinyApp(ui, server)
 # 
 
 
-
+# results() %>% mutate(
+#   score= 
+#     (OwnCostPropHhLess25K_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
+#                                     eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
+#                                     eq_pol_weighting() %>% filter(policy=="Eq11") %>% pull(norm))) +
+#     (OwnCostProp_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
+#                            eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
+#                            eq_pol_weighting() %>% filter(policy=="Eq12") %>% pull(norm)))+
+#     (OwnCostPropHh25Kto50K_norm * (goal_weighting() %>% filter(goal=="equity") %>% pull(norm) * 
+#                                      eq_obj_weighting() %>% filter(obj=="eq1") %>% pull(norm) * 
+#                                      eq_pol_weighting() %>% filter(policy=="Eq13") %>% pull(norm)))+
+#     (BikePMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+#                                    mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+#                                    mob1_pol_weighting() %>% filter(policy=="Mob11") %>% pull(norm)))+
+#     (WalkPMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+#                                    mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+#                                    mob1_pol_weighting() %>% filter(policy=="Mob12") %>% pull(norm)))+
+#     (TransitTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+#                                      mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+#                                      mob1_pol_weighting() %>% filter(policy=="Mob13") %>% pull(norm)))+
+#     (TransitPMTPerPrsnUrban_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+#                                       mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+#                                       mob1_pol_weighting() %>% filter(policy=="Mob14") %>% pull(norm)))+
+#     (BikeTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+#                                   mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+#                                   mob1_pol_weighting() %>% filter(policy=="Mob15") %>% pull(norm)))+
+#     (WalkTripsPerCapita_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+#                                   mob_obj_weighting() %>% filter(obj=="mob1") %>% pull(norm) * 
+#                                   mob1_pol_weighting() %>% filter(policy=="Mob17") %>% pull(norm)))+
+#     (HouseholdDvmtPerPrsn_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+#                                     mob_obj_weighting() %>% filter(obj=="mob2") %>% pull(norm) * 
+#                                     mob2_pol_weighting() %>% filter(policy=="Mob21") %>% pull(norm))) + 
+#     (TotalDvmtPerPrsn_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+#                                 mob_obj_weighting() %>% filter(obj=="mob2") %>% pull(norm) * 
+#                                 mob2_pol_weighting() %>% filter(policy=="Mob22") %>% pull(norm))) + 
+#     (ArtDvmtPropExtCong_SalemKeizer_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+#                                               mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
+#                                               mob3_pol_weighting() %>% filter(policy=="Mob41") %>% pull(norm))) + 
+#     (FwyExtCongTTI_Metro_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+#                                    mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
+#                                    mob3_pol_weighting() %>% filter(policy=="Mob42") %>% pull(norm))) + 
+#     (ArtExtCongTTI_Metro_norm * (goal_weighting() %>% filter(goal=="mob") %>% pull(norm) * 
+#                                    mob_obj_weighting() %>% filter(obj=="mob4") %>% pull(norm) * 
+#                                    mob3_pol_weighting() %>% filter(policy=="Mob43") %>% pull(norm))) +
+#     (AutoFatalCrash_Metro_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+#                                     sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+#                                     sfty_pol_weighting() %>% filter(policy=="Sfty11") %>% pull(norm))) + 
+#     (AutoFatalUrban_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+#                               sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+#                               sfty_pol_weighting() %>% filter(policy=="Sfty12") %>% pull(norm))) + 
+#     (AutoInjuryUrban_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+#                                sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+#                                sfty_pol_weighting() %>% filter(policy=="Sfty13") %>% pull(norm))) + 
+#     (AutoFatalRural_norm * (goal_weighting() %>% filter(goal=="safety") %>% pull(norm) * 
+#                               sfty_obj_weighting() %>% filter(obj=="sfty1") %>% pull(norm) * 
+#                               sfty_pol_weighting() %>% filter(policy=="Sfty14") %>% pull(norm))) + 
+#     (TotalCO2e_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+#                          sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
+#                          sus1_pol_weighting() %>% filter(policy=="Sus11") %>% pull(norm))) + 
+#     (HouseholdCO2ePerPrsn_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+#                                     sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
+#                                     sus1_pol_weighting() %>% filter(policy=="Sus12") %>% pull(norm))) + 
+#     (HouseholdCO2ePerMileRural_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+#                                          sus_obj_weighting() %>% filter(obj=="sus1") %>% pull(norm) * 
+#                                          sus1_pol_weighting() %>% filter(policy=="Sus13") %>% pull(norm))) +
+#     (BusCO2eRate_Metro_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+#                                  sus_obj_weighting() %>% filter(obj=="sus2") %>% pull(norm) * 
+#                                  sus2_pol_weighting() %>% filter(policy=="Sus21") %>% pull(norm))) +
+#     (HvyTrkAveUrbanCO2eRate_Metro_norm * (goal_weighting() %>% filter(goal=="sust") %>% pull(norm) * 
+#                                             sus_obj_weighting() %>% filter(obj=="sus2") %>% pull(norm) * 
+#                                             sus2_pol_weighting() %>% filter(policy=="Sus22") %>% pull(norm)))+
+#     (`PresAdapt$2022_norm` * (goal_weighting() %>% filter(goal=="stew") %>% pull(norm) * 
+#                                 pres_obj_weighting() %>% filter(obj=="goal") %>% pull(norm) * 
+#                                 pres_pol_weighting() %>% filter(policy=="Goal") %>% pull(norm)))
+# ) %>%
+#   arrange(desc(score)) 
